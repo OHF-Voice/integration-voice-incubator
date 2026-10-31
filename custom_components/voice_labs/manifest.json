@@ -6,7 +6,9 @@
   ],
   "config_flow": true,
   "dependencies": [
+    "conversation",
     "intent",
+    "tts",
     "websocket_api"
   ],
   "documentation": "https://github.com/OHF-Voice/voice-labs",

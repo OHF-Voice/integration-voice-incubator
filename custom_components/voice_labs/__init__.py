@@ -22,6 +22,10 @@ exposed (``voice_labs/exposed``) for the questions it answers itself.
 Each area a satellite is in has a do not disturb switch (switch.py); the app
 asks which are on (``voice_labs/do_not_disturb``) before sending an
 announcement, a call or music there.
+
+The app asks an LLM conversation agent with its answer streamed back as it is
+made, and has Home Assistant's TTS speak it a sentence at a time
+(streams.py).
 """
 
 from __future__ import annotations
@@ -40,6 +44,7 @@ from homeassistant.helpers.typing import ConfigType
 
 from .const import DOMAIN
 from .satellites import Satellites, VoiceLabsConfigEntry
+from .streams import async_register as async_register_streams
 from .switch import describe as describe_switches
 from .timer_list import async_setup_timer_lists
 from .timer_list_const import DATA_COMPONENT
@@ -56,6 +61,7 @@ async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
     websocket_api.async_register_command(hass, websocket_handle_intent)
     websocket_api.async_register_command(hass, websocket_exposed)
     websocket_api.async_register_command(hass, websocket_do_not_disturb)
+    async_register_streams(hass)
     return True
 
 

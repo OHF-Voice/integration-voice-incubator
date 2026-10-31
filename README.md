@@ -54,6 +54,10 @@ satellite:
 and each area a satellite is in a **do not disturb** switch
 (`switch.<area>_do_not_disturb`; see [Do not disturb](#do-not-disturb)).
 
+It streams an LLM conversation agent's answer to the app as it is made, and
+speech to a satellite a sentence at a time (see
+[Conversation agent](#conversation-agent)).
+
 It also runs the commands' **intents** for the app, as Assist does (see
 **Intents** below).
 
@@ -1185,10 +1189,19 @@ Home Assistant conversation agent (Settings, "Conversation agent"): Home
 Assistant's own, or an LLM's (OpenAI, Google, Ollama ...). Its answer is said,
 and what it doesn't understand either is the Unknown command's.
 
-Each satellite keeps a conversation with it: for 5 minutes after its last
-answer there (a setting, as the Voice PE's `conversation_timeout`), the next
-sentence continues it, so "who wrote The Odyssey?" ... "when did he live?"
-follows on. Skills still answer first.
+Each area keeps a conversation with it -- every satellite there shares it;
+one in no area has its own: for 5 minutes after its last answer there (a
+setting, as the Voice PE's `conversation_timeout`), the next sentence
+continues it, so "who wrote The Odyssey?" ... "when did he live?" follows on.
+Home Assistant's chat log keeps the whole conversation under its id, as
+Assist's does. Skills still answer first.
+
+An LLM's answer is said as it comes: a sentence at a time, each said while the
+agent is still writing the rest -- by Piper, or by a TTS entity (a TTS stream
+played on the satellite; one that streams its input, such as Home Assistant
+Cloud's or Wyoming Piper's, says each sentence as it comes). Home Assistant's
+own agent answers at once. This needs this integration up to date; with an
+older one the whole answer is said once it is done.
 
 A dry run (Test it without "Really run it", or a dry-run debug session)
 never asks the agent, since it can act in your home.

@@ -19,3 +19,13 @@ def voice_labs_integration(enable_custom_integrations: None) -> None:
 
     if str(COMPONENTS) not in list(custom_components.__path__):
         custom_components.__path__.append(str(COMPONENTS))
+
+
+@pytest.fixture(autouse=True)
+async def core(hass) -> None:
+    """Home Assistant's own component, which a running Home Assistant always
+    has set up first: the conversation component's default agent reads which
+    entities are exposed from it."""
+    from homeassistant.setup import async_setup_component  # pylint: disable=import-outside-toplevel
+
+    assert await async_setup_component(hass, "homeassistant", {})
