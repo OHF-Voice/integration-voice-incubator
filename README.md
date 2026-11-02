@@ -199,8 +199,9 @@ in Settings, and under **Input** and **Output** on each satellite's
 page.
 
 With **Home Assistant Cloud** signed in, the app takes it the first time it
-finds it: its speech-to-text, for when the words are needed, and its voice
-for the replies, for every satellite -- unless you had chosen one already.
+finds it: its speech-to-text, running **Always, as you speak** (below), and
+its voice for the replies, for every satellite -- unless you had chosen one
+already.
 It does so once: choose another in Settings, or the app's own models, and
 that stays.
 
