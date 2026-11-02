@@ -1029,9 +1029,11 @@ satellite's.
   at the other -- as a speakerphone does: the voice's band only, and while one
   side speaks, the other turned down, so the two can't squeal. Neither answers its wake words meanwhile, and both rings
   blink. The **button on either** ends it on both (another tone); so does
-  either disconnecting, a timer finishing on either, or half an hour. The
-  satellite in the area named is the first of them by name; one already in a
-  call, ringing or on the intercom is busy.
+  either disconnecting, a timer finishing on either, or half an hour. Of
+  several in the area named, it connects to the one that last answered
+  someone -- where they likely are -- else the first by name, passing over
+  one already in a call, ringing or on the intercom (busy) or on older
+  firmware.
 
 A command of your own can announce something fixed or a template of what was
 heard (`announce: "Dinner is ready"`, `announce: "{{ slots.message }}"`), and
