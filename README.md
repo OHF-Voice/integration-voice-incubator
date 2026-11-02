@@ -1121,11 +1121,22 @@ once with **Choose commands** under "When nothing matches" on the
 **Settings** page, where each step can also be turned off for every command
 (a command's page then says "off in Settings", and a call's trace says why
 the step was skipped). Commands from the library are not chosen until you
-choose them. Home Assistant's sentence triggers are under **Choose
-commands** too, for meaning only: "time to hit the hay" can run a "good
-night" trigger, and Home Assistant is sent the trigger's own sentence
-closest to what was said. One with free text (`play {album} by {artist}`)
-has no sentence of its own to send, and can't be chosen.
+choose them.
+
+Home Assistant's sentence triggers are under **Choose commands** too. What
+was said isn't one of a trigger's sentences, and Home Assistant would run
+nothing for it, so it is sent one that is:
+
+- **Meaning**, for a trigger with sentences of its own: "time to hit the
+  hay" can run a "good night" trigger, sending the sentence closest to what
+  was said.
+- **The model**, for a trigger with free text (`play {album} by {artist}`):
+  "put on Kind of Blue by Miles Davis" hears an album and an artist, and
+  sends "play Kind of Blue by Miles Davis" -- only when Home Assistant would
+  hear it as that trigger. The model knows the trigger by its automation's
+  **description**, else its name: describe what it does, as for a command.
+  Name the wildcards for what they hold (`{album}`, not `{x}`): the model
+  looks for each by its name.
 
 - **Meaning** picks the chosen command a sentence is very close to -- its
   example sentences and description: "kill the lights in the office" for
