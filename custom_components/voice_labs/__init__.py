@@ -19,9 +19,10 @@ as Assist does -- only on entities exposed to Assist, unless the app names
 the device itself -- on behalf of a satellite, and reads which entities are
 exposed (``voice_labs/exposed``) for the questions it answers itself.
 
-Each area a satellite is in has a do not disturb switch (switch.py); the app
-asks which are on (``voice_labs/do_not_disturb``) before sending an
-announcement, a call or music there.
+Each area a satellite is in has a do not disturb switch and a night mode
+switch (switch.py); the app asks which are on (``voice_labs/do_not_disturb``)
+before sending an announcement, a call or music there, and follows the night
+mode switches' states to keep the satellites there dim and quiet.
 
 The app asks an LLM conversation agent with its answer streamed back as it is
 made, and has Home Assistant's TTS speak it a sentence at a time
@@ -245,9 +246,13 @@ def websocket_exposed(
 def websocket_do_not_disturb(
     hass: HomeAssistant, connection: websocket_api.ActiveConnection, msg: dict[str, Any]
 ) -> None:
-    """Each satellite's area's do not disturb switch, and whether it is on."""
+    """Each satellite's area's do not disturb switch (``areas``) and night
+    mode switch (``night``), and whether each is on."""
     satellites = _satellites(hass)
     if satellites is None:
         connection.send_error(msg["id"], "not_loaded", "Voice Labs is not set up")
         return
-    connection.send_result(msg["id"], {"areas": describe_switches(satellites.do_not_disturb)})
+    connection.send_result(
+        msg["id"],
+        {"areas": describe_switches(satellites.do_not_disturb), "night": describe_switches(satellites.night_mode)},
+    )

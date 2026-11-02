@@ -311,14 +311,15 @@ async def test_intents_act_on_what_is_exposed(hass: HomeAssistant, hass_ws_clien
     assert msg["success"] and msg["result"]["entities"] == ["light.ceiling", "light.strip"]
 
 
-async def _do_not_disturb(client) -> dict:
+async def _do_not_disturb(client, kind: str = "areas") -> dict:
+    """The do not disturb switches (``areas``), or the night mode ones (``night``)."""
     await client.send_json_auto_id({"type": "voice_labs/do_not_disturb"})
     msg = await client.receive_json()
     assert msg["success"], msg
-    return msg["result"]["areas"]
+    return msg["result"][kind]
 
 
-async def test_do_not_disturb_for_each_satellites_area(
+async def test_do_not_disturb_and_night_mode_for_each_satellites_area(
     hass: HomeAssistant, hass_ws_client: WebSocketGenerator
 ) -> None:
     bedroom = ar.async_get(hass).async_create("Bedroom")
@@ -330,26 +331,33 @@ async def test_do_not_disturb_for_each_satellites_area(
     # A satellite in no area: no switch.
     assert hass.states.async_entity_ids("switch") == []
     assert await _do_not_disturb(client) == {}
+    assert await _do_not_disturb(client, "night") == {}
 
-    # In an area: its switch, in the area, off.
+    # In an area: its switches, in the area, off.
     devices.async_update_device(satellite["device_id"], area_id=bedroom.id)
     await hass.async_block_till_done()
-    switch = "switch.bedroom_do_not_disturb"
-    assert hass.states.get(switch).state == "off"
-    assert er.async_get(hass).async_get(switch).area_id == bedroom.id
+    switch, night = "switch.bedroom_do_not_disturb", "switch.bedroom_night_mode"
+    for entity_id in (switch, night):
+        assert hass.states.get(entity_id).state == "off"
+        assert er.async_get(hass).async_get(entity_id).area_id == bedroom.id
+    assert hass.states.get(night).attributes["icon"] == "mdi:weather-night"
     await hass.services.async_call("switch", "turn_on", {"entity_id": switch}, blocking=True)
     assert await _do_not_disturb(client) == {bedroom.id: {"entity_id": switch, "on": True}}
+    assert await _do_not_disturb(client, "night") == {bedroom.id: {"entity_id": night, "on": False}}
+    await hass.services.async_call("switch", "turn_on", {"entity_id": night}, blocking=True)
+    assert await _do_not_disturb(client, "night") == {bedroom.id: {"entity_id": night, "on": True}}
 
-    # On across a reload; renamed with its area.
+    # On across a reload; renamed with their area.
     assert await hass.config_entries.async_reload(entry.entry_id)
     await hass.async_block_till_done()
-    assert hass.states.get(switch).state == "on"
+    assert hass.states.get(switch).state == "on" and hass.states.get(night).state == "on"
     ar.async_get(hass).async_update(bedroom.id, name="Main Bedroom")
     await hass.async_block_till_done()
     assert hass.states.get(switch).attributes["friendly_name"] == "Main Bedroom do not disturb"
+    assert hass.states.get(night).attributes["friendly_name"] == "Main Bedroom night mode"
 
     # No satellite there any more: gone.
     devices.async_update_device(satellite["device_id"], area_id=None)
     await hass.async_block_till_done()
-    assert hass.states.get(switch) is None
-    assert await _do_not_disturb(client) == {}
+    assert hass.states.get(switch) is None and hass.states.get(night) is None
+    assert await _do_not_disturb(client) == {} and await _do_not_disturb(client, "night") == {}

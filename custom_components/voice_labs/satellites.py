@@ -69,6 +69,8 @@ class Satellites:
         """The voice_timer_list platform, to add a new satellite's timers to."""
         self.do_not_disturb: dict[str, Any] = {}
         """Each satellite's area's do not disturb switch (switch.py), by area id."""
+        self.night_mode: dict[str, Any] = {}
+        """And its night mode switch."""
 
     async def async_load(self) -> None:
         data = await self._store.async_load() or {}

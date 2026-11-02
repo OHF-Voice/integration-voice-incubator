@@ -52,7 +52,9 @@ satellite:
 - a **timer list** (`voice_timer_list.<satellite>_timers`) holding its timers.
 
 and each area a satellite is in a **do not disturb** switch
-(`switch.<area>_do_not_disturb`; see [Do not disturb](#do-not-disturb)).
+(`switch.<area>_do_not_disturb`; see [Do not disturb](#do-not-disturb)) and
+a **night mode** switch (`switch.<area>_night_mode`; see
+[Night mode](#night-mode)).
 
 It streams an LLM conversation agent's answer to the app as it is made, and
 speech to a satellite a sentence at a time (see
@@ -97,8 +99,8 @@ its satellites' tiles and three tabs:
 
 A satellite in an area has that area's commands and settings on top of Whole
 Home's; one in no area has Whole Home's only (and "the lights" are none). An
-area with a satellite has **Do not disturb** at the top of its page (see
-[Do not disturb](#do-not-disturb)).
+area with a satellite has **Night mode** and **Do not disturb** at the top of
+its page (see [Night mode](#night-mode) and [Do not disturb](#do-not-disturb)).
 
 Satellites on the network are found and connected to automatically. As on
 the stock Voice PE, a satellite's ring shows when it isn't connected: solid
@@ -1018,6 +1020,34 @@ on in the Bedroom." unless it has its own response (`do_not_disturb`).
 The switch comes with the first satellite in an area and goes with the last,
 and keeps its state across restarts. It needs this integration up to date:
 with an older one, nothing is kept out.
+
+## Night mode
+
+Each area with a satellite has a **Night mode** switch: at the top of the
+area's page, and in Home Assistant (`switch.bedroom_night_mode`, in the area)
+for automations -- on at bedtime with a Schedule helper or a sleep sensor,
+or from a "good night" sentence trigger. On, light and sound are kept to a
+minimum there:
+
+- **A command that acts says nothing.** The ring shows how it went as the
+  call ends: one slow green pulse when it was done, two quick red blinks
+  when it wasn't, or nothing was understood. None of the sounds play.
+- **What a blink can't tell is said quietly**, 15 dB down: an answer -- the
+  time, the weather, the conversation agent's -- and a command's question
+  before it acts ("Cancel all 3 timers?"), and the answer to it is heard as
+  always. It is said with the built-in voice on the satellite, even where a
+  Home Assistant TTS entity speaks by day.
+- **The ring is dim and amber** while you speak and the command is worked
+  on, and dark between calls (the LED Ring light aside); the timer
+  countdown shows dimly. The satellite's own sounds (the mute switch, the
+  headphone jack) don't play.
+- **Nothing comes in from other areas**: night mode is do not disturb too.
+- **Timers and alarms still ring** as loud and bright as ever, and say what
+  rang. An alarm doesn't turn night mode off.
+
+It needs this integration and the satellites' firmware up to date: with an
+older integration there is no switch; older firmware hears the commands but
+shows no blink and keeps its ring as by day.
 
 ## When nothing matches
 
