@@ -616,6 +616,30 @@ sequence:
 Every command that runs also fires a `voice_labs_command` event with the same
 data plus `outcome` and `response` (what was said), failed ones included.
 
+### Two commands at once
+
+In English, two commands may be said together, joined by "and", "then" or
+"and then":
+
+- two of them: "turn on the lights and turn off the TV", "lock the front
+  door and then turn off the lights";
+- one, on two things: "turn off the desk lamp and the floor lamp", "turn
+  off the kitchen and bedroom lights", "turn off the lights and the TV";
+- two, on one thing: "turn on the TV and set its volume to 50%" -- "it",
+  "its", "them" and "their" are what the first acted on -- and "turn on the
+  kitchen lights and set the brightness to 50", where the second names
+  nothing: it's the kitchen's.
+
+They run one after the other, and what both say is said as one sentence:
+"Turned off the lights and the TV.", "Turned on the lights and turned off
+the TV." Only when the whole sentence isn't one command, so "add apples and
+bananas to the shopping list", "turn on the salt and pepper lamp" and "set a
+timer for an hour and a half" are still one. Two at most. Both are done, or
+neither: when one part isn't understood, nothing runs (it goes to the
+conversation agent, if there is one, as a sentence nothing understood). A
+command that asks first, as **Cancel every timer** does, is asked on its
+own: "Ask me to cancel all the timers on its own."
+
 ## Timers
 
 Add the commands from the library's **Timers and alarms** group. Timers belong to the
