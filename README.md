@@ -648,13 +648,18 @@ also see `timer` (the timer it was about) and `timers`:
 | `missing_time` | an alarm with no time heard |
 | `failed` | Home Assistant refused, or the integration isn't set up |
 
-Between calls the satellite's light ring shows the time left on the timer that
-finishes soonest, and it flashes while one rings. A finished timer says which
-it was ("The pizza timer is done.") and then **rings** until someone says
-**"stop"** -- the satellite listens for it while
-ringing -- or "Okay Nabu" anything, or presses the center button, or five
-minutes pass. Timers are held in
-memory by Home Assistant, so a restart loses them.
+Between calls the satellite's light ring shows the time left on each running
+timer, in its own color: the whole ring is the longest timer's length, and
+each timer's color reaches as far as it has left, the one finishing soonest
+on top -- so where the colors change is when each finishes, the first one
+next. Each keeps its color while it runs (the first in the LED Ring light's
+color, so a timer alone looks as it always did), has at least an LED of its
+own, and a paused one isn't shown; at night they are all amber. The ring
+flashes while one rings. A finished timer **rings** on the satellite's
+instrument, says which it was ("The pizza timer is done."), and rings on
+until someone says **"stop"** -- the satellite listens for it while ringing
+-- or "Okay Nabu" anything, or presses the center button, or 15 minutes
+pass. Timers are held in memory by Home Assistant, so a restart loses them.
 
 ### Alarms and reminders
 
