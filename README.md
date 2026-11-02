@@ -11,7 +11,7 @@ speaks English.
 It comes in three parts:
 
 - the **Voice Labs app** for Home Assistant, which listens, recognizes and
-  answers, in [OHF-Voice/apps-experimental](https://github.com/OHF-Voice/apps-experimental/tree/master/voice_labs);
+  answers, in [OHF-Voice/apps-experimental](https://github.com/OHF-Voice/apps-experimental/tree/main/voice_labs);
 - the **Voice Labs integration**, here, which gives each satellite its device,
   its timers and Assist's intents;
 - the **firmware** for the Home Assistant Voice Preview Edition, built in
