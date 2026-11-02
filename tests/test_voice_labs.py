@@ -55,15 +55,16 @@ async def test_satellite_starts_in_its_esphome_devices_area(
     client = await hass_ws_client(hass)
     [satellite] = await _sync(client, [{"id": MAC, "name": "voice-labs-vpe"}])
 
-    # Its own device, in the ESPHome device's area to begin with.
+    # Its own device, in the ESPHome device's area to begin with, and the
+    # area's timer list.
     assert satellite["device_id"] != existing.id
     assert satellite["area_id"] == "kitchen"
     assert satellite["device_name"] == "voice-labs-vpe"
-    assert satellite["timer_list"] == "voice_timer_list.voice_labs_vpe_timers"
+    assert satellite["timer_list"] == "voice_timer_list.kitchen_timers"
     device = devices.async_get(satellite["device_id"])
     assert ("voice_labs", MAC) in device.identifiers
     entity = er.async_get(hass).async_get(satellite["timer_list"])
-    assert entity.device_id == satellite["device_id"]
+    assert entity.device_id is None and entity.area_id == "kitchen"
     assert hass.states.get(satellite["timer_list"]).state == "0"
 
     # From then on the areas are separate.
@@ -72,7 +73,48 @@ async def test_satellite_starts_in_its_esphome_devices_area(
     assert satellite["area_id"] == "kitchen"
     devices.async_update_device(satellite["device_id"], area_id="bedroom")
     [satellite] = await _sync(client, [{"id": MAC, "name": "voice-labs-vpe"}])
-    assert satellite["area_id"] == "bedroom"
+    assert satellite["area_id"] == "bedroom" and satellite["timer_list"] == "voice_timer_list.bedroom_timers"
+    await hass.async_block_till_done()
+    assert hass.states.get("voice_timer_list.kitchen_timers") is None  # no satellite there now
+
+
+async def test_an_areas_satellites_share_its_timer_list(
+    hass: HomeAssistant, hass_ws_client: WebSocketGenerator
+) -> None:
+    kitchen = ar.async_get(hass).async_create("Kitchen")
+    await _setup(hass)
+    client = await hass_ws_client(hass)
+    one, two = await _sync(client, [{"id": "one", "name": "Counter"}, {"id": "two", "name": "Table"}])
+    assert (one["timer_list"], two["timer_list"]) == ("voice_timer_list.counter_timers", "voice_timer_list.table_timers")
+
+    # Both in the Kitchen: one list, in the area; their own are gone.
+    devices = dr.async_get(hass)
+    for satellite in (one, two):
+        devices.async_update_device(satellite["device_id"], area_id=kitchen.id)
+    await hass.async_block_till_done()
+    one, two = await _sync(client, [{"id": "one", "name": "Counter"}, {"id": "two", "name": "Table"}])
+    assert one["timer_list"] == two["timer_list"] == "voice_timer_list.kitchen_timers"
+    assert hass.states.get("voice_timer_list.counter_timers") is None
+    assert hass.states.get("voice_timer_list.table_timers") is None
+    assert er.async_get(hass).async_get("voice_timer_list.kitchen_timers").area_id == kitchen.id
+
+    # Renamed with the area.
+    ar.async_get(hass).async_update(kitchen.id, name="Galley")
+    await hass.async_block_till_done()
+    assert hass.states.get("voice_timer_list.kitchen_timers").attributes["friendly_name"] == "Galley timers"
+
+    # One out of every area: its own again; the area's stays for the other.
+    devices.async_update_device(two["device_id"], area_id=None)
+    await hass.async_block_till_done()
+    one, two = await _sync(client, [{"id": "one", "name": "Counter"}, {"id": "two", "name": "Table"}])
+    assert one["timer_list"] == "voice_timer_list.kitchen_timers"
+    assert two["timer_list"] == "voice_timer_list.table_timers"
+    # The last one out: the area's goes.
+    devices.async_update_device(one["device_id"], area_id=None)
+    await hass.async_block_till_done()
+    assert hass.states.get("voice_timer_list.kitchen_timers") is None
+    [one] = await _sync(client, [{"id": "one", "name": "Counter"}])
+    assert one["timer_list"] == "voice_timer_list.counter_timers"
 
 
 async def test_satellite_without_esphome_gets_its_own_device(

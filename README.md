@@ -49,9 +49,11 @@ satellite:
   ESPHome device appears twice: Home Assistant no longer merges devices across
   integrations. The new device starts in the ESPHome device's area, and has its
   own from then on.
-- a **timer list** (`voice_timer_list.<satellite>_timers`) holding its timers.
+- a **timer list** (`voice_timer_list.<satellite>_timers`) holding its
+  timers -- while it is in no area.
 
-and each area a satellite is in a **do not disturb** switch
+and each area a satellite is in a **timer list** every satellite there
+shares (`voice_timer_list.<area>_timers`, in the area), a **do not disturb** switch
 (`switch.<area>_do_not_disturb`; see [Do not disturb](#do-not-disturb)) and
 a **night mode** switch (`switch.<area>_night_mode`; see
 [Night mode](#night-mode)).
@@ -640,7 +642,7 @@ also see `timer` (the timer it was about) and `timers`:
 | outcome | when |
 |---|---|
 | `done` | it was done (or, for "how long is left", said) |
-| `no_timers` | nothing is running on this satellite |
+| `no_timers` | nothing is running in the satellite's area (on a satellite in no area: on it) |
 | `not_found` | the timer asked for, by name or length, isn't running |
 | `ambiguous` | several fit; it asks which |
 | `already` | pausing a paused timer, or resuming a running one |
@@ -712,10 +714,18 @@ are timers again, and a reminder with a time says so.
 | `not_found` | no alarm or reminder like the one asked for |
 | `ambiguous` | several fit; it says them |
 
+**Timers belong to the area.** Every satellite in an area shares the area's
+timer list: a timer set on one is shown on each, asked about, paused or
+cancelled from any of them, and when it finishes, each rings -- "stop" (or
+the button, or "Okay Nabu") on any one stops them all. A satellite in no area
+has a list of its own. Moving a satellite into an area loses the timers on
+its own list.
+
 Automations can follow timers with the `voice_labs.timer_created`,
 `timer_finished`, `timer_paused`, `timer_unpaused`, `timer_time_changed` and
-`timer_cancelled` triggers, and act on them with the `voice_timer_list.*`
-actions (`create_timer`, `cancel_timer`, `get_timers` ...).
+`timer_cancelled` triggers -- targeting an area's list, or the area -- and
+act on them with the `voice_timer_list.*` actions (`create_timer`,
+`cancel_timer`, `get_timers` ...).
 
 ## Music
 
