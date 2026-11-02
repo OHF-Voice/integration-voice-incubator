@@ -198,6 +198,12 @@ The app listens and speaks with models of its own, or with Home Assistant's
 in Settings, and under **Input** and **Output** on each satellite's
 page.
 
+With **Home Assistant Cloud** signed in, the app takes it the first time it
+finds it: its speech-to-text, for when the words are needed, and its voice
+for the replies, for every satellite -- unless you had chosen one already.
+It does so once: choose another in Settings, or the app's own models, and
+that stays.
+
 - **Speech-to-text.** Commands are always matched on the satellite's audio
   first. The STT entity writes what the built-in TDT model would otherwise:
   example sentences said word for word, free text ("play …", timer names),
