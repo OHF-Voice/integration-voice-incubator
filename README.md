@@ -1121,7 +1121,11 @@ once with **Choose commands** under "When nothing matches" on the
 **Settings** page, where each step can also be turned off for every command
 (a command's page then says "off in Settings", and a call's trace says why
 the step was skipped). Commands from the library are not chosen until you
-choose them.
+choose them. Home Assistant's sentence triggers are under **Choose
+commands** too, for meaning only: "time to hit the hay" can run a "good
+night" trigger, and Home Assistant is sent the trigger's own sentence
+closest to what was said. One with free text (`play {album} by {artist}`)
+has no sentence of its own to send, and can't be chosen.
 
 - **Meaning** picks the chosen command a sentence is very close to -- its
   example sentences and description: "kill the lights in the office" for
