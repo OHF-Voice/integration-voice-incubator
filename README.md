@@ -108,8 +108,10 @@ Satellites on the network are found and connected to automatically. As on
 the stock Voice PE, a satellite's ring shows when it isn't connected: solid
 warm white while it starts up and joins Wi-Fi, a blue sparkle until the app
 connects to it, and a red sparkle whenever it has lost Wi-Fi or the app
-(after 10 minutes of starting up, too). Click a satellite's tile for its
-page:
+(after 10 minutes of starting up, too). A satellite answers one app at a
+time: to try one with another Voice Labs app, disable its Voice Labs device
+in Home Assistant, and this app lets go of it until it's enabled again
+(there, or **Enable** on its page). Click a satellite's tile for its page:
 
 - **Settings**: its name, icon and area (with the integration, that is the
   area of its device in Home Assistant, and can be changed in either place),
