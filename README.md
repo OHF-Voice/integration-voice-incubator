@@ -237,7 +237,8 @@ that stays.
 - **Language.** Each entity is asked in the language you pick from the ones it
   supports, or automatically in its best match for English.
 - Without a speech-to-text entity, the app's own model (Parakeet) writes that
-  text.
+  text. It always hears AGC, so Runs and Audio show only once an entity is
+  picked.
 - **Text-to-speech.** Responses are spoken with the TTS entity (and the voice
   you pick) on the satellite's own media player -- Home Assistant sends it the
   audio's address and it plays it -- or, per satellite, on **another media
