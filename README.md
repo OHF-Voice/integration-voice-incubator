@@ -1300,6 +1300,11 @@ Cloud's or Wyoming Piper's, says each sentence as it comes). Home Assistant's
 own agent answers at once. This needs this integration up to date; with an
 older one the whole answer is said once it is done.
 
+**Its voice** gives its answers a voice of their own, so you can tell them
+from the commands': a built-in voice (and speaker), or a TTS entity and its
+voice. By default they're said like everything else -- in the satellite's
+voice, or the speaker's own (People).
+
 A dry run (Test it without "Really run it", or a dry-run debug session)
 never asks the agent, since it can act in your home.
 
