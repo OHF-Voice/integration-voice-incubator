@@ -722,12 +722,16 @@ the afternoon. A reminder without a time ("remind me to buy milk") goes on the
 to-do list among its entities (`todo.reminders` in the library's command),
 calendar or not.
 
-When one starts, the satellite that set it rings: an alarm says the time and
-rings like a timer, until "stop"; a reminder sounds the alarm once and is said
-("Reminder: call your mom."). An event added in Home Assistant is a reminder
-said on every satellite. The description of each event the app adds marks it
-as an alarm or a reminder and names the satellite
-(`[voice_labs:alarm:<satellite>]`); keep that when editing one. One missed by
+Alarms and reminders belong to the area, as its timers do: set on one
+satellite, they are listed and cancelled from any satellite there. When one
+starts, every satellite in the area rings: an alarm says the time and rings
+like a timer, until "stop" (said on one, it stops on all); a reminder sounds
+the alarm once and is said ("Reminder: call your mom."). A satellite in no
+area has its own. An event added in Home Assistant is a reminder said on
+every satellite. The description of each event the app adds marks it as an
+alarm or a reminder and names the area (`[voice_labs:alarm:<area>]`; one set
+before alarms were the area's names its satellite, and is that satellite's
+area's); keep that when editing one. One missed by
 up to five minutes (the app was down) still goes off. The calendar is
 followed live where Home Assistant can send its changes, else read every five
 minutes. If the calendar can't be made, the Home page says why, alarms
