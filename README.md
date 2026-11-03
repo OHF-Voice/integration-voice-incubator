@@ -363,9 +363,7 @@ file as it was is `commands.before-library.json`.
 
 One you already have is marked **added**, and can be added again. Tick several to add them together; in a group,
 **Select the … not added** ticks each command you have no version of (the
-version for the satellite it's said to). Under each section of the Home page
-you have commands from, **Not added** names the rest of it, to add one or
-all. A command has:
+version for the satellite it's said to). A command has:
 
 - **Icon**: to tell commands apart at a glance; by default, one for what it
   does (a timer, music, a script ...).
