@@ -486,7 +486,7 @@ version for the satellite it's said to). A command has:
   the chord as your conversation agent is asked. Each plays whole, and the
   reply follows it. In the same panel, pick the **instrument** they and the
   beep are played on -- any of the MuseScore General SoundFont's, by family,
-  an electric piano unless you choose -- and the **pitch** they start from
+  a grand piano unless you choose -- and the **pitch** they start from
   (each instrument has its own; a low one sounds better lower); **Try**
   plays them in your browser. Or turn them off.
 
