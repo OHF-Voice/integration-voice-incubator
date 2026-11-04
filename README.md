@@ -343,9 +343,9 @@ stays in its section when you change it, rename it or duplicate it.
 library's commands and skills -- search them, or show one group (the same
 groups, and Questions) -- and, always at the top, a
 custom command made from scratch. What the place already has is marked.
-Most of the
-library's commands come in **versions**, for what they act on; open one
-("Play music") to pick:
+Related commands are shown together ("Thermostat", "Shopping list",
+"Timers"): open one to see them. Most of the library's commands come in
+**versions**, for what they act on; open one ("Play music") to pick:
 
 - **on this satellite** -- nothing named: the satellite's own player, or the
   lights in its area ("play jazz", "turn on the lights");
@@ -1226,8 +1226,10 @@ there is none) still says why.
 
 ## Skills
 
-Skills (under **Questions**, among Whole Home's commands; an area can turn
-each off) answer questions no command takes, exactly and at once, without an LLM. Each is
+Skills (under **Questions**, among Whole Home's commands, each with a
+switch; an area can turn each off, and **Delete** on its page takes it off
+the list until it's added again) answer questions no command takes, exactly
+and at once, without an LLM. Each is
 computed, never guessed -- a question a skill can't read whole is left to
 the next step:
 
