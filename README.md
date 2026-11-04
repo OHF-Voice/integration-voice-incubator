@@ -81,22 +81,24 @@ its satellites' tiles and three tabs:
   they're for (your own first, under **Custom**, the skills last, under
   **Questions**), with the **Unknown command** at the bottom; type in the
   search box to find them by their title, description, example sentences or
-  keywords. An area's are **its own**, heard only from satellites there,
-  then **From Whole Home**: each of the whole home's commands and skills,
-  and each group of them, with a switch to turn it off there. A satellite
+  keywords. A sentence trigger shows its title, and a skill what it
+  answers: open one for the rest. An area's are under its name, heard only from
+  satellites there, then **Whole Home**: each of the whole home's commands
+  and skills, and each group of them, with a switch to turn it off there. A satellite
   that hears one turned off in its area says "That command isn't available
   in the Kitchen." Where an area's own and the whole home's take the same
   sentence, the area's own goes first there: to have a command do something
-  else in one area, duplicate it and make the copy that area's own.
-- **Names**: an area's own names ("the lights in the kitchen") and its
-  devices; Whole Home's every name heard everywhere, the devices in no area,
+  else in one area, duplicate it and make the copy that area's own. An
+  area with no satellite has no Commands tab, unless it has its own.
+- **Names**: an area's **Area Name** ("the lights in the kitchen") and its
+  **Device Names**; Whole Home's every name heard everywhere, the devices in no area,
   the floors and the value lists (see [Names](#names)).
 - **Settings**: Whole Home's are every setting of the app. An area may have
   its own of some -- its thermostat, shopping list and to-do list, the
   built-in voice, sounds and their instrument and pitch, silence to end,
-  and **Say at most** (brief, or a beep: no command there says more; a
-  question still answers) -- each the whole home's until **Change for the
-  …**, and back with **Use Whole Home's**. Whole Home's Settings say which
+  and **Response Level** (brief, or a beep: no command there says more; a
+  question still answers) -- each the **Home Default** until **Change for
+  the …**, and back with **Use Home Default**. Whole Home's Settings say which
   areas have their own.
 
 A satellite in an area has that area's commands and settings on top of Whole
@@ -1140,7 +1142,9 @@ once with **Choose commands** under "When nothing matches" on the
 the step was skipped). Commands from the library are not chosen until you
 choose them.
 
-Home Assistant's sentence triggers are under **Choose commands** too. What
+Home Assistant's sentence triggers are under **Choose commands** too, and
+on each one's page (open it from the Home page; **Edit in Home Assistant**
+opens its automation). What
 was said isn't one of a trigger's sentences, and Home Assistant would run
 nothing for it, so it is sent one that is:
 
