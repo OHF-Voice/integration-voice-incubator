@@ -126,7 +126,10 @@ The home's **weather entity**, **thermostat**, **shopping list** and
 its own thermostat and lists: the library's commands for them use these
 unless one is given its own implied target (`home: weather`, `climate`,
 `shopping_list` or `todo_list` on a command). With neither, the satellite
-says "That isn't set up yet." (`not_set`).
+says "That isn't set up yet." (`not_set`). Where none is set, the app takes
+Home Assistant's weather entity, its thermostat, and its to-do list called
+"Shopping list" -- when it has just one of each; with several, you choose.
+It does so once: clear or change one, and that stays.
 
 ### Wake words
 
