@@ -972,8 +972,8 @@ is given as its implied target:
   "auto_high", "low" keeps the rest of what it is set to: "auto_low" from
   "auto_high", "on_low" from "on_high".
 
-Set the thermostat is a version of **Set the temperature**; its others set a
-thermostat by name or those in an area, through Home Assistant's intent.
+Set the thermostat is a version of **Set the temperature**; its other sets a
+thermostat by name, through Home Assistant's intent.
 
 ## Covers and locks
 
