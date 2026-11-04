@@ -947,9 +947,10 @@ is given as its implied target:
   temperature inside", "how warm is it in the house" -- "It's 68 degrees
   inside. The thermostat is set to 70." (or the two it keeps between, in heat
   and cool mode).
-- **Set the thermostat**: "set the thermostat to 70", "turn the thermostat
-  up to 72", "turn the heat up to 72". In heat and cool mode the thermostat
-  keeps two temperatures, and Home Assistant refuses one alone.
+- **Set the thermostat**: "set the thermostat to 70", "set the temperature
+  to 70", "turn the heat up to 72" -- "Thermostat set to 70 degrees." In heat
+  and cool mode the thermostat keeps two temperatures, and Home Assistant
+  refuses one alone.
 - **Turn up the heat** and **Turn down the heat**: "turn up the heat", "turn
   the thermostat down", "raise the temperature" -- a degree Celsius at a
   time, two in Fahrenheit, and in heat and cool mode both ends. "Turned the
@@ -971,8 +972,8 @@ is given as its implied target:
   "auto_high", "low" keeps the rest of what it is set to: "auto_low" from
   "auto_high", "on_low" from "on_high".
 
-A thermostat by name or in an area is **Set the temperature** (Climate),
-through Home Assistant's intent.
+Set the thermostat is a version of **Set the temperature**; its others set a
+thermostat by name or those in an area, through Home Assistant's intent.
 
 ## Covers and locks
 
