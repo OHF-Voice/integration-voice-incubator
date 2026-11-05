@@ -228,7 +228,10 @@ that stays.
   entity answers, with nothing left to send. Everything else is the same:
   commands are still matched on the audio first. Every command goes to the
   entity, which matters for a cloud one. For every satellite on the Settings
-  page, or one satellite's own under Input.
+  page, or one satellite's own under Input. A session's Recognition step
+  says what the entity did -- not asked, asked (what it heard, how long it
+  took), heard as you spoke, or failed and the built-in model's words
+  instead -- and the app's log has a line each time it answers.
 - **Audio.** What the speech-to-text entity hears: **AGC** (the default), the
   microphone with automatic gain that commands are matched on; or **AEC**,
   echo-cancelled, with the satellite's own playback (its music, its voice)
