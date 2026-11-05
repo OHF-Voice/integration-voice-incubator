@@ -40,6 +40,12 @@ It comes in three parts:
 Then open **Voice Labs** in Home Assistant's sidebar to make commands, name
 things, set up satellites and look at sessions.
 
+Without Home Assistant's app store, it also runs as a container
+(`ghcr.io/ohf-voice/voice-labs`, amd64 and aarch64), given Home Assistant's
+address and a long-lived access token (`HASS_URL`, `HASS_TOKEN`), with no
+wake word training and nothing guarding its web UI: see
+[Standalone](https://github.com/OHF-Voice/apps-experimental/tree/main/voice_labs#standalone).
+
 ## The Voice Labs integration
 
 The integration (this repository's `custom_components/voice_labs`) gives each
