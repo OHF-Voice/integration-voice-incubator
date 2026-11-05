@@ -1383,6 +1383,9 @@ the value lists.
 **Devices.** Voice acts only on the devices added -- Home Assistant's
 exposure to Assist doesn't count -- each in its area: Home Assistant's,
 unless you pick another for voice (one added on an area's Names goes there).
+Searching to add one on an area's Names lists the area's devices first, then
+those in no area, then the rest; before you type, only the area's that
+aren't added yet (on Whole Home's, those in no area).
 A device has two lists of names:
 
 - **In its area**: heard from a satellite there ("the lamp" in the office).
