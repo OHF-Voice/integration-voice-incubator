@@ -1361,9 +1361,9 @@ Some things are different on a satellite that isn't the app's:
   area.
 - There's no night mode (it can't blink), and no call sounds.
 
-Its speech-to-text is never the app's own: a speech-to-text called Voice
-Labs, chosen in Settings, would ask itself, so the built-in model hears
-instead.
+Its speech-to-text is never the app's own: one called Voice Labs would ask
+itself, so Settings doesn't offer it, and one chosen before is passed over
+for the built-in model.
 
 Only Home Assistant may connect: from this machine, or the Supervisor's
 network. The `wyoming_port` option moves it (0 turns it off).
