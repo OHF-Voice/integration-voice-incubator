@@ -1319,6 +1319,52 @@ voice, or the speaker's own (People).
 A dry run (Test it without "Really run it", or a dry-run debug session)
 never asks the agent, since it can act in your home.
 
+## Home Assistant's voice assistants
+
+The app is also a Wyoming service, so Home Assistant's own voice assistants
+can use it: for satellites that aren't the app's (a Voice PE with Home
+Assistant's firmware, a phone, a Wyoming satellite), and for what's typed in
+Assist. Home Assistant finds it (**Settings > Devices & services**,
+Discovered); once it is added, pick its speech-to-text, text-to-speech and
+conversation agent for a voice assistant (**Settings > Voice assistants**),
+all three or any of them.
+
+- **Speech-to-text** writes what it heard as the command it heard. The
+  speech model spells well but doesn't know your names ("Turn on the Neno
+  leave"), while the command was heard with the name in the audio; so the
+  names and numbers it was heard with are written over the words said there,
+  as the Names page has them: "Turn on the Nanoleaf." That is given only when
+  it reads back as the same command; else the words as heard, if they do;
+  else the command's own words ("turn on Nanoleaf"). What isn't a command is
+  the words as heard. Sessions shows what was given, and how.
+- **Text-to-speech** is Piper, with every voice it has (not only those
+  downloaded): each is downloaded the first time it is used -- which takes a
+  moment -- and removed once it has gone unused for 30 days, unless the app
+  speaks with it. An LLM's answer is said a sentence at a time, as it comes.
+- **The conversation agent** is your commands, skills, "When nothing
+  matches" and conversation agent, as on one of the app's satellites in the
+  asking satellite's area (its Home Assistant device's). When its
+  speech-to-text gave the words a moment ago, it hears their audio again
+  rather than the words, as the app hears its own satellites. A question it
+  asks back -- a command's confirm, the agent's -- keeps the conversation
+  going, and the satellite listens for the answer.
+
+Some things are different on a satellite that isn't the app's:
+
+- A command that would beep says its brief response instead: Home Assistant
+  plays its sound only for its own agent.
+- A timer is set by Home Assistant's own agent, on that satellite, which
+  rings it. Alarms and reminders still ring on the app's satellites in its
+  area.
+- There's no night mode (it can't blink), and no call sounds.
+
+Speech-to-text from Parakeet alone -- the words as heard, nothing more -- is
+on the next port, for a voice assistant whose agent is another: add the
+**Wyoming Protocol** integration with host `127.0.0.1` and port `10801`.
+
+Only Home Assistant may connect: from this machine, or the Supervisor's
+network. The `wyoming_port` option moves both (0 turns them off).
+
 ## Names
 
 What voice acts on, and what things are called when spoken, each pointing at
@@ -1474,4 +1520,7 @@ commands:
 - `speaker_threshold`: how closely a voice must match to be identified.
 - `silence_seconds`: silence that ends a command. **Silence to end** in
   Settings -- the whole home's, an area's or a satellite's -- wins.
+- `wyoming_port`: where Home Assistant's voice assistants reach the app
+  (default 10800), with Parakeet's speech-to-text on the next port; 0 for
+  neither.
 - `debug_logging`: verbose logs.
