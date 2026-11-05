@@ -99,7 +99,8 @@ its satellites' tiles and three tabs:
   and **Response Level** (brief, or a beep: no command there says more; a
   question still answers) -- each the **Home Default** until **Change for
   the …**, and back with **Use Home Default**. Whole Home's Settings say which
-  areas have their own.
+  areas have their own. An area's **Music** player has no Home Default: see
+  Music.
 
 A satellite in an area has that area's commands and settings on top of Whole
 Home's; one in no area has Whole Home's only (and "the lights" are none). An
@@ -347,8 +348,9 @@ Related commands are shown together ("Thermostat", "Shopping list",
 "Timers"): open one to see them. Most of the library's commands come in
 **versions**, for what they act on; open one ("Play music") to pick:
 
-- **on this satellite** -- nothing named: the satellite's own player, or the
-  lights in its area ("play jazz", "turn on the lights");
+- **in this satellite's area** -- nothing named: the satellite's own player
+  (else its area's), or the lights in its area ("play jazz", "turn on the
+  lights");
 - **on a device by name** ("play jazz on the Mark 2", "turn on the desk
   lamp");
 - **in an area or floor by name** ("play jazz in the kitchen", "turn on the
@@ -810,16 +812,22 @@ library's **Music** group:
   goes to one player: on a floor with several, one that isn't already
   playing.
 
-Each comes in versions: **on this satellite**, **on a different device**
+Each comes in versions: **in this satellite's area**, **on a different device**
 ("pause the music on the Mark 2", "play jazz on the Mark 2") and **in an area
 or floor** ("play jazz in the kitchen", "turn it up upstairs"). Moving the
 music has only the last two. Name the players, rooms and floors first (Names
 page); a player must be a Music Assistant player.
 
 The player is the satellite's own, unless a command names another (Target),
-a room or a floor. Pausing, skipping, the volume and "what's playing" act on
-whichever Music Assistant player is playing in the satellite's area when its
-own is not, and "resume" resumes what was paused by voice. When nothing plays
+a room or a floor. Without one of its own, it is its area's **Music** player
+(the area's Settings), else a Music Assistant player in the area: Home
+Assistant's satellites (Home Assistant's voice assistants) have none the app
+knows of, so an area's player is where "play jazz" plays from them -- a stock
+Voice PE's own speaker, once Music Assistant has it as a player. The whole
+home has none: a satellite in no area plays only where it's told. Pausing,
+skipping, the volume and "what's playing" act on whichever player is playing
+in the satellite's area when its own is not, and "resume" resumes what was
+paused by voice. When nothing plays
 there, they follow the music the satellite sent elsewhere -- "play jazz on the
 Mark 2", "move the music to the kitchen" -- while it plays there (or, to
 resume it or ask what it is, is paused there), and say where: "Volume at 40%
@@ -1182,11 +1190,11 @@ nothing for it, so it is sent one that is:
   place: with both chosen, "I need cookies to be on the shopping list" is
   closest to What's on the shopping list, which takes no item, and is Add
   to the shopping list.
-- A command's **versions** (on this satellite, a device by name, an area or
-  floor by name) are one choice to both: what was said picks the version --
-  "lights out in the bedroom" is Turn off the lights in an area or floor,
-  "lights out" the one for this satellite. So are any commands you describe
-  the same way.
+- A command's **versions** (in this satellite's area, a device by name, an
+  area or floor by name) are one choice to both: what was said picks the
+  version -- "lights out in the bedroom" is Turn off the lights in an area or
+  floor, "lights out" the one for this satellite's area. So are any commands
+  you describe the same way.
   It compares the chosen commands with others close in meaning, chosen or
   not, and picks the likeliest chosen one. It runs nothing when it is not
   sure of that one (**Threshold**, 0.3: lower runs more, and more by
