@@ -1330,16 +1330,18 @@ conversation agent for a voice assistant (**Settings > Voice assistants**),
 all three or any of them.
 
 - **Speech-to-text** hears as the app's satellites do: with the built-in
-  model, or the speech-to-text chosen in Settings (asked every time here; the
-  built-in model stands in when it fails). It writes what it heard as the
+  model, or the speech-to-text chosen in Settings -- asked when its words are
+  needed, or hearing every command as it is said ("Always, as you speak");
+  the built-in model stands in when it fails. It writes what it heard as the
   command it heard. The speech model spells well but doesn't know your names
   ("Turn on the Neno leave"), while the command was heard with the name in
   the audio; so the names and numbers it was heard with are written over the
   words said there, as the Names page has them: "Turn on the Nanoleaf." That
   is given only when it reads back as the same command; else the words as
   heard, if they do; else the command's own words ("turn on Nanoleaf"). A
-  chosen speech-to-text's words are tried as they are first. What isn't a
-  command is the words as heard. Sessions shows what was given, and how.
+  chosen speech-to-text's words, when it heard them, are tried as they are
+  first. What isn't a command is the words as heard. Sessions shows what was
+  given, and how.
 - **Text-to-speech** is Piper, with every voice it has (not only those
   downloaded): each is downloaded the first time it is used -- which takes a
   moment -- and removed once it has gone unused for 30 days, unless the app
