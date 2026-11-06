@@ -51,10 +51,12 @@ wake word training and nothing guarding its web UI: see
 The integration (this repository's `custom_components/voice_labs`) gives each
 satellite:
 
-- a **device** of its own, with its own area. A satellite that is also an
+- a **device** of its own, with its own area, made when the satellite
+  connects to the app. A satellite that is also an
   ESPHome device appears twice: Home Assistant no longer merges devices across
   integrations. The new device starts in the ESPHome device's area, and has its
-  own from then on.
+  own from then on. Deleted while its satellite is away, the device stays
+  deleted until the satellite connects again.
 - a **timer list** (`voice_timer_list.<satellite>_timers`) holding its
   timers -- while it is in no area.
 
