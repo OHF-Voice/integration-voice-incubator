@@ -349,7 +349,9 @@ group -- Climate, Covers and locks, Date and time, Lights and switches,
 Lists, Music, Reminders and calendar, Satellites, Scenes and scripts,
 Sensors, Timers and alarms, Weather -- with the ones you made from scratch
 first, under **Custom**, and the skills last, under **Questions**. A command from the library
-stays in its section when you change it, rename it or duplicate it.
+stays in its section when you change it, rename it or duplicate it. A new
+home starts with the library's **What time is it** and **What's the date**;
+deleted, they stay deleted.
 
 **Add**, on Whole Home's Commands or an area's, adds to that place: the
 library's commands and skills -- search them, or show one group (the same
