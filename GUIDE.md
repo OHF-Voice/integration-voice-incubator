@@ -389,7 +389,12 @@ version for the satellite it's said to). A command has:
     (English: warm white and the rest, in kelvin), `on_off`, `open_closed`,
     `locked_unlocked`, `cover_classes` and `hvac_modes` (heat, cool,
     heat_cool, auto, dry, fan_only, off) -- and editing one on the Names
-    page makes it yours.
+    page makes it yours. One you don't want can be turned off there (a
+    command that uses it can't be saved while it is). A Home Assistant
+    sentence trigger's slot named as one (`start the {program} cycle`, with
+    a list `program`) is heard from it too, as one of its phrases, and Home
+    Assistant is sent the value: "start the economy cycle" as "start the
+    eco cycle", for `trigger.slots.program` to be `eco`.
   - **Free text**, kept bounded so it can be heard reliably: between two
     keywords ("add … to the shopping list"), from a keyword to the end
     ("remind me to …"), or right before or after a keyword ("the … timer").
