@@ -266,8 +266,10 @@ an enrolled voice, or both. Add someone by name; their page sets:
 
 - **Their own**: a to-do list, a calendar and a Music Assistant playlist.
   They are what "my" means when they speak: **Add to my to-do list** ("add
-  call mom to my to-do list"), **Remind me**, **What's on my calendar** and
-  **Play my playlist** act on the speaker's own. Where nobody has one of
+  call mom to my to-do list"), **Take off my to-do list**, **Check off my
+  to-do list** ("check off fix the gate on my to-do list"), **Remind me**,
+  **What's on my calendar** and **Play my playlist** act on the speaker's
+  own. Where nobody has one of
   their own, those act on the command's own (the to-do list it was given);
   where someone does, the speaker must be known -- "Sorry, I don't know
   who's speaking." otherwise -- and someone without one gets the command's
