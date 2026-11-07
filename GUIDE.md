@@ -282,7 +282,9 @@ an enrolled voice, or both. Add someone by name; their page sets:
 whose wake word started it; else, when the home has only one person, them --
 unless their voice was heard and it wasn't theirs. With one person, no voice
 is needed: enroll it to tell guests apart.
-A session's Speaker step says who it was and how.
+A session's Speaker step says who it was and how. To ask, add the library's
+**Who am I** (People): "who am I", "who's speaking" or "what's my name" says
+"You are Mike.", or "Sorry, I don't know who's speaking."
 
 The library's "my" commands act on the speaker's own with `mine`
 (`todo_list`, `calendar` or `playlist`): their to-do list or calendar
@@ -303,7 +305,7 @@ there, for training a wake word that hears them better.
 
 The Home page lists the commands as the library has them, a panel for each
 group -- Climate, Covers and locks, Date and time, Lights and switches,
-Lists, Music, Reminders and calendar, Satellites, Scenes and scripts,
+Lists, Music, People, Reminders and calendar, Satellites, Scenes and scripts,
 Sensors, Timers and alarms, Weather -- with the ones you made from scratch
 first, under **Custom**, and the skills last, under **Questions**. A command from the library
 stays in its section when you change it, rename it or duplicate it. A new
