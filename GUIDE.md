@@ -443,7 +443,10 @@ version for the satellite it's said to). A command has:
   operation or a music operation (below), plus an
   optional **response** template that is spoken. Nothing to say plays a short
   sound. Or **nothing** at all: the library's **Never mind** ("never mind",
-  "cancel", "forget it") only ends the conversation, silently.
+  "cancel", "forget it") only ends the conversation, silently. It also runs
+  when it's the closest to what was said, and when not a word was heard
+  after the wake word (most likely a false wake), rather than "Sorry, I
+  didn't understand that."
 - **How much it says** when it's done, one of five levels:
   0. **Silent**: nothing, not even a sound -- what a command that does
      nothing says by default. A question still answers.
@@ -1016,8 +1019,8 @@ satellite's.
 (English), work between satellites:
 
 - **Announce**: "announce dinner is ready", "tell everyone dinner is ready",
-  "announce dinner is ready in the kitchen", "announce upstairs that it's
-  bedtime". A chime, then the message, on every other satellite -- or those
+  "announce dinner is ready in the kitchen", "announce in the kitchen dinner
+  is ready", "announce upstairs that it's bedtime". A chime, then the message, on every other satellite -- or those
   in the area or on the floor named. Their music is turned down meanwhile. A
   satellite in a call, ringing a timer or on the intercom says it once that is
   over, within a minute; a call started meanwhile cuts it off.
@@ -1099,7 +1102,13 @@ shows no blink and keeps its ring as by day.
 
 In order, each only when the one before found nothing:
 
-1. **Keywords and example sentences**: in the audio, then -- when nothing
+1. **The home's sentences**: what was said, heard as one of the sentences
+   the commands say -- their words in any order, with their names and
+   numbers, and their example sentences -- when one is close to what was
+   heard. A session's Recognition step shows the sentence and its cost,
+   taken or not. Free text and two commands together are never one of
+   them: those go on below.
+2. **Keywords and example sentences**: in the audio, then -- when nothing
    matched there -- in the transcript the speech model wrote (the built-in
    TDT, or your Home Assistant STT), so "unlock the front door" heard plainly
    by the speech model runs even when the keyword evidence in the audio was
@@ -1113,13 +1122,15 @@ In order, each only when the one before found nothing:
    a device, area or floor for another version of it, that version runs
    ("set bed light to green"). A session's Recognition step says so. Typed text (a
    satellite's Test it) is read as said, word for word.
-2. **Skills** (Questions, among Whole Home's commands): spelling,
+3. **Skills** (Questions, among Whole Home's commands): spelling,
    dates, the clock, units and arithmetic answer exactly ("what's twelve
    times eight").
-3. **Meaning**, for the commands chosen for it (below).
-4. **A small model**, for the commands chosen for it (below).
-5. **The conversation agent** (Settings), when there is one.
-6. **The Unknown command** (below).
+4. **Meaning**, for the commands chosen for it (below).
+5. **A small model**, for the commands chosen for it (below).
+6. **The conversation agent** (Settings), when there is one.
+7. **The Unknown command** (below) -- or **Never mind**, silently, when it
+   is the closest to what was said, or when not a word was heard after the
+   wake word (most likely a false wake).
 
 Choose a command for meaning on its page with **Also sentences that mean the
 same** (under its example sentences), and for the model with **Also when the
