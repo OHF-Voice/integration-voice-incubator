@@ -230,6 +230,33 @@ that stays.
   **noise W scale** (how much its rhythm varies) and **volume**. **Try** says a
   sentence in your browser with them before you save.
 
+### Kaldi instead of Parakeet
+
+**Commands heard by** (Settings, under Listening and speaking) is Parakeet,
+or **Kaldi**: the speech model Speech-to-Phrase used, which some hear
+better with. Kaldi hears only **example sentences** -- your commands' and
+Home Assistant's sentence triggers' -- word for word, with "um" before or
+"please" after. Keywords alone aren't heard: a command with no example
+sentence shows **not heard** on the Commands list, and says why on its page.
+
+- **Free text** is heard only from a **value list named as its slot**
+  (Names, Value lists): with a list called `item`, "add milk to the shopping
+  list" is also heard with every item of the list in place of "milk". A
+  command or trigger that needs one shows **partly heard** or **not heard**.
+- **Anything else** is refused: compared with a background of everyday
+  words, a sentence that doesn't stand out isn't taken. "Sorry, I didn't
+  understand that." -- or nothing, when no word was said at all.
+- **Pronunciations** (a page of its own in Kaldi mode): how Kaldi says each
+  word of your sentences. A word its dictionary lacks -- a name, "ecobee" --
+  is guessed: check those first, and write your own in the model's phones
+  (listed there, each with an example word). Saving builds Kaldi's
+  sentences again, in a second or two.
+- Questions for Home Assistant's agent, free text with no list, and the
+  steps when nothing matches aren't heard. Home Assistant's voice
+  assistants get the sentence heard, as written, or nothing.
+- A session's Recognition step says what Kaldi heard, how far it was from
+  the background, and what the background heard.
+
 ### End of speech
 
 A satellite stops listening once you have started speaking and then gone
