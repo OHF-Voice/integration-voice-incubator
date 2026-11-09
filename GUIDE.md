@@ -235,9 +235,18 @@ that stays.
 **Commands heard by** (Settings, under Listening and speaking) is Parakeet,
 or **Kaldi**: the speech model Speech-to-Phrase used, which some hear
 better with. Kaldi hears only **example sentences** -- your commands' and
-Home Assistant's sentence triggers' -- word for word, with "um" before or
-"please" after. Keywords alone aren't heard: a command with no example
-sentence shows **not heard** on the Commands list, and says why on its page.
+Home Assistant's sentence triggers' -- and **Kaldi sentences**, word for
+word, with "um" before or "please" after. Keywords alone aren't heard: a
+command with neither shows **not heard** on the Commands list, and says why
+on its page.
+
+- **Kaldi sentences** (on a command's page in Kaldi mode) have the slots
+  they hear in braces: `turn on [the] {entity}`, `set the {area} lights to
+  {percentage} percent`. Each is heard with every name on the Names page the
+  command may take, every number, every value of its list. Each must be one
+  way to say the command whole; one that reads as another command says so.
+  The library's commands come with them, and yours go beside them. Parakeet
+  doesn't use them.
 
 - **Free text** is heard only from a **value list named as its slot**
   (Names, Value lists): with a list called `item`, "add milk to the shopping
