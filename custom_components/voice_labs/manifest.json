@@ -11,10 +11,10 @@
     "tts",
     "websocket_api"
   ],
-  "documentation": "https://github.com/OHF-Voice/voice-labs",
+  "documentation": "https://github.com/OHF-Voice/integration-voice-incubator",
   "integration_type": "hub",
   "iot_class": "local_push",
-  "issue_tracker": "https://github.com/OHF-Voice/voice-labs/issues",
+  "issue_tracker": "https://github.com/OHF-Voice/integration-voice-incubator/issues",
   "requirements": [],
   "single_config_entry": true,
   "version": "0.2.0"
