@@ -1,4 +1,4 @@
-"""The Voice Labs integration: satellites as devices, their timer lists, and
+"""The Voice Incubator integration: satellites as devices, their timer lists, and
 their areas' do not disturb switches."""
 
 from datetime import timedelta
@@ -16,7 +16,7 @@ MAC = "d83bdaa3d5f4"
 
 
 async def _setup(hass: HomeAssistant) -> MockConfigEntry:
-    entry = MockConfigEntry(domain="voice_labs", title="Voice Labs")
+    entry = MockConfigEntry(domain="voice_incubator", title="Voice Incubator")
     entry.add_to_hass(hass)
     assert await hass.config_entries.async_setup(entry.entry_id)
     await hass.async_block_till_done()
@@ -24,17 +24,17 @@ async def _setup(hass: HomeAssistant) -> MockConfigEntry:
 
 
 async def _sync(client, satellites: list[dict]) -> list[dict]:
-    await client.send_json_auto_id({"type": "voice_labs/satellites/sync", "satellites": satellites})
+    await client.send_json_auto_id({"type": "voice_incubator/satellites/sync", "satellites": satellites})
     msg = await client.receive_json()
     assert msg["success"], msg
     return msg["result"]["satellites"]
 
 
 async def test_config_flow_creates_one_entry(hass: HomeAssistant) -> None:
-    result = await hass.config_entries.flow.async_init("voice_labs", context={"source": "user"})
+    result = await hass.config_entries.flow.async_init("voice_incubator", context={"source": "user"})
     assert result["type"] == "create_entry"
     await hass.async_block_till_done()
-    result = await hass.config_entries.flow.async_init("voice_labs", context={"source": "user"})
+    result = await hass.config_entries.flow.async_init("voice_incubator", context={"source": "user"})
     assert result["type"] == "abort"
 
 
@@ -42,37 +42,37 @@ async def test_satellite_starts_in_its_esphome_devices_area(
     hass: HomeAssistant, hass_ws_client: WebSocketGenerator
 ) -> None:
     devices = dr.async_get(hass)
-    esphome = MockConfigEntry(domain="esphome", title="Voice Labs VPE")
+    esphome = MockConfigEntry(domain="esphome", title="Voice Incubator VPE")
     esphome.add_to_hass(hass)
     existing = devices.async_get_or_create(
         config_entry_id=esphome.entry_id,
         connections={(dr.CONNECTION_NETWORK_MAC, "d8:3b:da:a3:d5:f4")},
-        name="Voice Labs VPE",
+        name="Voice Incubator VPE",
     )
     devices.async_update_device(existing.id, area_id="kitchen")
 
     await _setup(hass)
     client = await hass_ws_client(hass)
-    [satellite] = await _sync(client, [{"id": MAC, "name": "voice-labs-vpe"}])
+    [satellite] = await _sync(client, [{"id": MAC, "name": "voice-incubator-vpe"}])
 
     # Its own device, in the ESPHome device's area to begin with, and the
     # area's timer list.
     assert satellite["device_id"] != existing.id
     assert satellite["area_id"] == "kitchen"
-    assert satellite["device_name"] == "voice-labs-vpe"
+    assert satellite["device_name"] == "voice-incubator-vpe"
     assert satellite["timer_list"] == "voice_timer_list.kitchen_timers"
     device = devices.async_get(satellite["device_id"])
-    assert ("voice_labs", MAC) in device.identifiers
+    assert ("voice_incubator", MAC) in device.identifiers
     entity = er.async_get(hass).async_get(satellite["timer_list"])
     assert entity.device_id is None and entity.area_id == "kitchen"
     assert hass.states.get(satellite["timer_list"]).state == "0"
 
     # From then on the areas are separate.
     devices.async_update_device(existing.id, area_id="office")
-    [satellite] = await _sync(client, [{"id": MAC, "name": "voice-labs-vpe"}])
+    [satellite] = await _sync(client, [{"id": MAC, "name": "voice-incubator-vpe"}])
     assert satellite["area_id"] == "kitchen"
     devices.async_update_device(satellite["device_id"], area_id="bedroom")
-    [satellite] = await _sync(client, [{"id": MAC, "name": "voice-labs-vpe"}])
+    [satellite] = await _sync(client, [{"id": MAC, "name": "voice-incubator-vpe"}])
     assert satellite["area_id"] == "bedroom" and satellite["timer_list"] == "voice_timer_list.bedroom_timers"
     await hass.async_block_till_done()
     assert hass.states.get("voice_timer_list.kitchen_timers") is None  # no satellite there now
@@ -137,7 +137,7 @@ async def test_satellites_survive_a_restart(
     await hass.async_block_till_done()
     assert await hass.config_entries.async_reload(entry.entry_id)
     await hass.async_block_till_done()
-    await client.send_json_auto_id({"type": "voice_labs/satellites/list"})
+    await client.send_json_auto_id({"type": "voice_incubator/satellites/list"})
     msg = await client.receive_json()
     assert [s["timer_list"] for s in msg["result"]["satellites"]] == [
         "voice_timer_list.kitchen_vpe_timers"
@@ -194,7 +194,7 @@ async def test_finished_trigger(hass: HomeAssistant, hass_ws_client: WebSocketGe
         "automation",
         {
             "automation": {
-                "triggers": {"trigger": "voice_labs.timer_finished", "target": {"entity_id": entity_id}},
+                "triggers": {"trigger": "voice_incubator.timer_finished", "target": {"entity_id": entity_id}},
                 "actions": {"event": "timer_done", "event_data": {"name": "{{ trigger.timer.name }}"}},
             }
         },
@@ -219,9 +219,9 @@ async def test_finished_trigger(hass: HomeAssistant, hass_ws_client: WebSocketGe
 
 
 async def test_sync_needs_the_entry(hass: HomeAssistant, hass_ws_client: WebSocketGenerator) -> None:
-    assert await async_setup_component(hass, "voice_labs", {})
+    assert await async_setup_component(hass, "voice_incubator", {})
     client = await hass_ws_client(hass)
-    await client.send_json_auto_id({"type": "voice_labs/satellites/sync", "satellites": []})
+    await client.send_json_auto_id({"type": "voice_incubator/satellites/sync", "satellites": []})
     msg = await client.receive_json()
     assert not msg["success"] and msg["error"]["code"] == "not_loaded"
 
@@ -273,14 +273,14 @@ async def test_satellite_comes_with_its_music_assistant_player(
 
     await _setup(hass)
     client = await hass_ws_client(hass)
-    [satellite, manual] = await _sync(client, [{"id": MAC, "name": "voice-labs-vpe"}, {"id": "manual", "name": "Desk"}])
+    [satellite, manual] = await _sync(client, [{"id": MAC, "name": "voice-incubator-vpe"}, {"id": "manual", "name": "Desk"}])
     assert satellite["media_player"] == "media_player.voice_mike"
     assert manual["media_player"] is None
     music.mock_state(hass, ConfigEntryState.NOT_LOADED)  # nothing of Music Assistant's to unload
 
 
 async def _intent(client, **message) -> dict:
-    await client.send_json_auto_id({"type": "voice_labs/intent/handle", **message})
+    await client.send_json_auto_id({"type": "voice_incubator/intent/handle", **message})
     msg = await client.receive_json()
     assert msg["success"], msg
     return msg["result"]
@@ -348,14 +348,14 @@ async def test_intents_act_on_what_is_exposed(hass: HomeAssistant, hass_ws_clien
     assert [t["id"] for t in result["response"]["data"]["success"]] == ["light.desk"]
 
     # What is exposed to Assist.
-    await client.send_json_auto_id({"type": "voice_labs/exposed"})
+    await client.send_json_auto_id({"type": "voice_incubator/exposed"})
     msg = await client.receive_json()
     assert msg["success"] and msg["result"]["entities"] == ["light.ceiling", "light.strip"]
 
 
 async def _do_not_disturb(client, kind: str = "areas") -> dict:
     """The do not disturb switches (``areas``), or the night mode ones (``night``)."""
-    await client.send_json_auto_id({"type": "voice_labs/do_not_disturb"})
+    await client.send_json_auto_id({"type": "voice_incubator/do_not_disturb"})
     msg = await client.receive_json()
     assert msg["success"], msg
     return msg["result"][kind]

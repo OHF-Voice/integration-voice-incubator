@@ -1,6 +1,6 @@
-"""Config flow for Voice Labs: one entry, nothing to ask.
+"""Config flow for Voice Incubator: one entry, nothing to ask.
 
-The voice_labs app starts this flow itself when it finds the integration
+The voice_incubator app starts this flow itself when it finds the integration
 installed but not set up; it can also be added from the UI.
 """
 
@@ -13,8 +13,8 @@ from homeassistant.config_entries import ConfigFlow, ConfigFlowResult
 from .const import DOMAIN
 
 
-class VoiceLabsConfigFlow(ConfigFlow, domain=DOMAIN):
-    """Set up Voice Labs."""
+class VoiceIncubatorConfigFlow(ConfigFlow, domain=DOMAIN):
+    """Set up Voice Incubator."""
 
     VERSION = 1
 
@@ -22,4 +22,4 @@ class VoiceLabsConfigFlow(ConfigFlow, domain=DOMAIN):
         """Create the entry."""
         if self._async_current_entries():
             return self.async_abort(reason="single_instance_allowed")
-        return self.async_create_entry(title="Voice Labs", data={})
+        return self.async_create_entry(title="Voice Incubator", data={})

@@ -2,11 +2,11 @@
 
 **Do not disturb**: on, the app keeps out what other areas send there:
 announcements, intercom calls, and music that would start or get louder (the
-app's voice_labs/actions.py). What is said in the area itself still works
+app's voice_incubator/actions.py). What is said in the area itself still works
 there.
 
 **Night mode**: on, the satellites there keep light and sound to a minimum
-(the app's voice_labs/night.py): a command that acts answers with a dim
+(the app's voice_incubator/night.py): a command that acts answers with a dim
 blink, a question or a confirmation is said quietly, and nothing comes in
 from other areas -- night mode is do not disturb too. Timers and alarms
 still ring.
@@ -28,7 +28,7 @@ from homeassistant.helpers import area_registry as ar, device_registry as dr, en
 from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 from homeassistant.helpers.restore_state import RestoreEntity
 
-from .satellites import VoiceLabsConfigEntry
+from .satellites import VoiceIncubatorConfigEntry
 
 
 @dataclass(frozen=True)
@@ -47,7 +47,7 @@ KINDS = (DO_NOT_DISTURB, NIGHT_MODE)
 
 
 async def async_setup_entry(
-    hass: HomeAssistant, entry: VoiceLabsConfigEntry, async_add_entities: AddConfigEntryEntitiesCallback
+    hass: HomeAssistant, entry: VoiceIncubatorConfigEntry, async_add_entities: AddConfigEntryEntitiesCallback
 ) -> None:
     """Each kind of switch for each satellite's area, now and as they change."""
     satellites = entry.runtime_data

@@ -1,4 +1,4 @@
 # The services this integration registers are voice_timer_list's -- the entity
 # platform it brings, which is not an integration of its own -- and
-# timer_list.py describes them in code (async_set_service_schema): voice_labs
+# timer_list.py describes them in code (async_set_service_schema): voice_incubator
 # itself has none.

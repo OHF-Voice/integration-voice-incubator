@@ -1,4 +1,4 @@
-"""Constants for voice_labs's timer lists.
+"""Constants for voice_incubator's timer lists.
 
 Ported from the timer_list integration (branch
 claude/timer-list-entity-local-d25403) with its domain renamed to
@@ -16,7 +16,7 @@ if TYPE_CHECKING:
     from .timer_list import TimerListEntity
 
 DOMAIN = "voice_timer_list"
-"""The entity domain. The integration that provides it is voice_labs."""
+"""The entity domain. The integration that provides it is voice_incubator."""
 DATA_COMPONENT: HassKey[EntityComponent[TimerListEntity]] = HassKey(DOMAIN)
 
 ATTR_TIMER_ID = "timer_id"

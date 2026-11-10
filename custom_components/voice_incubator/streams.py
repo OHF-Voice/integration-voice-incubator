@@ -1,15 +1,15 @@
 """What the app streams through Home Assistant: a conversation agent's answer
 as it is made, and speech whose text comes a sentence at a time.
 
-``voice_labs/conversation/stream`` asks a conversation agent as Assist does:
+``voice_incubator/conversation/stream`` asks a conversation agent as Assist does:
 in a chat log opened with a delta listener, so each piece of the answer comes
 back as the agent makes it (``delta`` events), then the result as
 ``conversation/process`` gives it. The chat log keeps the whole turn under the
 conversation's id -- what was asked, what the agent said and did, and the
 answer of an agent that doesn't write to it itself -- as Assist's would.
 
-``voice_labs/tts/stream`` speaks on a media player with a TTS entity, its text
-given a piece at a time (``voice_labs/tts/stream/add``): a TTS entity that
+``voice_incubator/tts/stream`` speaks on a media player with a TTS entity, its text
+given a piece at a time (``voice_incubator/tts/stream/add``): a TTS entity that
 streams its input speaks each piece as it comes, and the media player plays
 it as it is made. One that doesn't gets the whole text at the end, and the
 media player is only told to play it then.
@@ -53,7 +53,7 @@ def async_register(hass: HomeAssistant) -> None:
 
 @websocket_api.websocket_command(
     {
-        vol.Required("type"): "voice_labs/conversation/stream",
+        vol.Required("type"): "voice_incubator/conversation/stream",
         vol.Required("text"): cv.string,
         vol.Optional("agent_id"): cv.string,
         vol.Optional("conversation_id"): vol.Any(cv.string, None),
@@ -95,7 +95,7 @@ def websocket_conversation_stream(
         finally:
             connection.subscriptions.pop(msg_id, None)
 
-    task = hass.async_create_task(converse(), f"voice_labs conversation {msg_id}", eager_start=False)
+    task = hass.async_create_task(converse(), f"voice_incubator conversation {msg_id}", eager_start=False)
     connection.subscriptions[msg_id] = task.cancel
     connection.send_result(msg_id)
 
@@ -167,7 +167,7 @@ class _TextStream:
 
 @websocket_api.websocket_command(
     {
-        vol.Required("type"): "voice_labs/tts/stream",
+        vol.Required("type"): "voice_incubator/tts/stream",
         vol.Required("engine_id"): cv.string,
         vol.Required("media_player"): cv.entity_id,
         vol.Optional("text", default=""): str,
@@ -182,7 +182,7 @@ async def websocket_tts_stream(
 ) -> None:
     """Speak on ``media_player`` with the TTS entity ``engine_id`` as an
     announcement, its text given a piece at a time: ``text`` now, more with
-    voice_labs/tts/stream/add (and ``end`` when there is no more). The result
+    voice_incubator/tts/stream/add (and ``end`` when there is no more). The result
     names the stream (``stream``). Unsubscribing ends its text."""
     msg_id = msg["id"]
     try:
@@ -246,7 +246,7 @@ async def websocket_tts_stream(
 
 @websocket_api.websocket_command(
     {
-        vol.Required("type"): "voice_labs/tts/stream/add",
+        vol.Required("type"): "voice_incubator/tts/stream/add",
         vol.Required("stream"): cv.string,
         vol.Optional("text", default=""): str,
         vol.Optional("end", default=False): bool,
@@ -257,7 +257,7 @@ async def websocket_tts_stream(
 def websocket_tts_stream_add(
     hass: HomeAssistant, connection: websocket_api.ActiveConnection, msg: dict[str, Any]
 ) -> None:
-    """More of a stream's text (voice_labs/tts/stream), and (``end``) that
+    """More of a stream's text (voice_incubator/tts/stream), and (``end``) that
     there is no more: then a TTS entity that doesn't stream its input says it
     all."""
     streams: dict[str, _TextStream] = hass.data.get(DATA_TTS_STREAMS, {})
@@ -271,5 +271,5 @@ def websocket_tts_stream_add(
         assert text.end is not None
         text.end()
         if text.play is not None:
-            hass.async_create_task(text.play(), f"voice_labs tts {msg['stream']}")
+            hass.async_create_task(text.play(), f"voice_incubator tts {msg['stream']}")
     connection.send_result(msg["id"])

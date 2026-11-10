@@ -1,7 +1,7 @@
 """Timer lists: many countdown timers held by one entity.
 
 Ported from the timer_list integration (branch
-claude/timer-list-entity-local-d25403) as part of voice_labs, with its entity
+claude/timer-list-entity-local-d25403) as part of voice_incubator, with its entity
 domain renamed to ``voice_timer_list`` so it cannot clash with timer_list once
 that is merged. Delete this when it is, and use timer_list instead.
 
@@ -65,7 +65,7 @@ from .timer_list_const import (
 
 _LOGGER = logging.getLogger(__name__)
 
-INTEGRATION_DOMAIN = "voice_labs"
+INTEGRATION_DOMAIN = "voice_incubator"
 ENTITY_ID_FORMAT = DOMAIN + ".{}"
 PLATFORM_SCHEMA = cv.PLATFORM_SCHEMA
 PLATFORM_SCHEMA_BASE = cv.PLATFORM_SCHEMA_BASE

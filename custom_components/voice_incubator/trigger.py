@@ -1,4 +1,4 @@
-"""Triggers for voice_labs's timer lists: voice_labs.timer_finished and the rest.
+"""Triggers for voice_incubator's timer lists: voice_incubator.timer_finished and the rest.
 
 Ported from the timer_list branch; they target voice_timer_list entities.
 """

@@ -12,8 +12,8 @@ COMPONENTS = Path(__file__).resolve().parent.parent / "custom_components"
 
 
 @pytest.fixture(autouse=True)
-def voice_labs_integration(enable_custom_integrations: None) -> None:
-    """Make custom_components.voice_labs loadable: the test package's
+def voice_incubator_integration(enable_custom_integrations: None) -> None:
+    """Make custom_components.voice_incubator loadable: the test package's
     custom_components, which Home Assistant imports, gets this one's too."""
     import custom_components  # pylint: disable=import-outside-toplevel
 

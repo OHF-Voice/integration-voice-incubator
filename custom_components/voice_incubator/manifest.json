@@ -1,6 +1,6 @@
 {
-  "domain": "voice_labs",
-  "name": "Voice Labs",
+  "domain": "voice_incubator",
+  "name": "Voice Incubator",
   "codeowners": [
     "@synesthesiam"
   ],

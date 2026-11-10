@@ -1,10 +1,10 @@
-"""Voice Labs: the voice_labs app's satellites, and their timers.
+"""Voice Incubator: the voice_incubator app's satellites, and their timers.
 
 The app registers each satellite it serves over the websocket API
-(``voice_labs/satellites/sync``). Each becomes a device -- the satellite's
+(``voice_incubator/satellites/sync``). Each becomes a device -- the satellite's
 ESPHome device when it has one, matched by MAC, so both share one area -- with a
 ``voice_timer_list`` entity holding its timers. The app starts, matches and
-rings those timers; automations can follow them with the ``voice_labs.timer_*``
+rings those timers; automations can follow them with the ``voice_incubator.timer_*``
 triggers.
 
 Each satellite's player in Music Assistant -- its Sendspin client's, found by
@@ -14,13 +14,13 @@ MAC in Music Assistant's own player data -- comes back with it.
 Home Assistant), renamed so it cannot clash with it, and provided by this
 integration.
 
-The app runs Home Assistant's intents through it (``voice_labs/intent/handle``)
+The app runs Home Assistant's intents through it (``voice_incubator/intent/handle``)
 as Assist does -- only on entities exposed to Assist, unless the app names
 the device itself -- on behalf of a satellite, and reads which entities are
-exposed (``voice_labs/exposed``) for the questions it answers itself.
+exposed (``voice_incubator/exposed``) for the questions it answers itself.
 
 Each area a satellite is in has a do not disturb switch and a night mode
-switch (switch.py); the app asks which are on (``voice_labs/do_not_disturb``)
+switch (switch.py); the app asks which are on (``voice_incubator/do_not_disturb``)
 before sending an announcement, a call or music there, and follows the night
 mode switches' states to keep the satellites there dim and quiet.
 
@@ -44,7 +44,7 @@ from homeassistant.helpers.device_registry import DeviceEntry
 from homeassistant.helpers.typing import ConfigType
 
 from .const import DOMAIN
-from .satellites import Satellites, VoiceLabsConfigEntry
+from .satellites import Satellites, VoiceIncubatorConfigEntry
 from .streams import async_register as async_register_streams
 from .switch import describe as describe_switches
 from .timer_list import async_setup_timer_lists
@@ -66,7 +66,7 @@ async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
     return True
 
 
-async def async_setup_entry(hass: HomeAssistant, entry: VoiceLabsConfigEntry) -> bool:
+async def async_setup_entry(hass: HomeAssistant, entry: VoiceIncubatorConfigEntry) -> bool:
     """Set up the satellites, their timer lists and their areas' do not
     disturb switches."""
     satellites = Satellites(hass, entry)
@@ -79,7 +79,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: VoiceLabsConfigEntry) ->
     return True
 
 
-async def async_unload_entry(hass: HomeAssistant, entry: VoiceLabsConfigEntry) -> bool:
+async def async_unload_entry(hass: HomeAssistant, entry: VoiceIncubatorConfigEntry) -> bool:
     """Unload the timer lists (their timers are lost) and the switches."""
     if not await hass.config_entries.async_unload_platforms(entry, PLATFORMS):
         return False
@@ -87,7 +87,7 @@ async def async_unload_entry(hass: HomeAssistant, entry: VoiceLabsConfigEntry) -
 
 
 async def async_remove_config_entry_device(
-    hass: HomeAssistant, entry: VoiceLabsConfigEntry, device: DeviceEntry
+    hass: HomeAssistant, entry: VoiceIncubatorConfigEntry, device: DeviceEntry
 ) -> bool:
     """Forget a satellite. Its ESPHome device, if it shares one, stays."""
     for domain, satellite_id in device.identifiers:
@@ -104,7 +104,7 @@ def _satellites(hass: HomeAssistant) -> Satellites | None:
 
 @websocket_api.websocket_command(
     {
-        vol.Required("type"): "voice_labs/satellites/sync",
+        vol.Required("type"): "voice_incubator/satellites/sync",
         vol.Required("satellites"): [
             {vol.Required("id"): cv.string, vol.Optional("name"): cv.string}
         ],
@@ -118,12 +118,12 @@ async def websocket_sync_satellites(
     """Register satellites; each gets a device and a timer list."""
     satellites = _satellites(hass)
     if satellites is None:
-        connection.send_error(msg["id"], "not_loaded", "Voice Labs is not set up")
+        connection.send_error(msg["id"], "not_loaded", "Voice Incubator is not set up")
         return
     connection.send_result(msg["id"], {"satellites": await satellites.async_sync(msg["satellites"])})
 
 
-@websocket_api.websocket_command({vol.Required("type"): "voice_labs/satellites/list"})
+@websocket_api.websocket_command({vol.Required("type"): "voice_incubator/satellites/list"})
 @websocket_api.require_admin
 @callback
 def websocket_list_satellites(
@@ -132,7 +132,7 @@ def websocket_list_satellites(
     """Every satellite registered so far."""
     satellites = _satellites(hass)
     if satellites is None:
-        connection.send_error(msg["id"], "not_loaded", "Voice Labs is not set up")
+        connection.send_error(msg["id"], "not_loaded", "Voice Incubator is not set up")
         return
     connection.send_result(
         msg["id"], {"satellites": [satellites.describe(s) for s in satellites.all()]}
@@ -145,7 +145,7 @@ ASSISTANT = "conversation"
 
 @websocket_api.websocket_command(
     {
-        vol.Required("type"): "voice_labs/intent/handle",
+        vol.Required("type"): "voice_incubator/intent/handle",
         vol.Required("intent"): cv.string,
         vol.Optional("slots", default={}): {cv.string: object},
         vol.Optional("variables", default={}): dict,
@@ -222,7 +222,7 @@ async def websocket_handle_intent(
     connection.send_result(msg["id"], {"response": result, "unavailable": unavailable})
 
 
-@websocket_api.websocket_command({vol.Required("type"): "voice_labs/exposed"})
+@websocket_api.websocket_command({vol.Required("type"): "voice_incubator/exposed"})
 @websocket_api.require_admin
 @callback
 def websocket_exposed(
@@ -240,7 +240,7 @@ def websocket_exposed(
     )
 
 
-@websocket_api.websocket_command({vol.Required("type"): "voice_labs/do_not_disturb"})
+@websocket_api.websocket_command({vol.Required("type"): "voice_incubator/do_not_disturb"})
 @websocket_api.require_admin
 @callback
 def websocket_do_not_disturb(
@@ -250,7 +250,7 @@ def websocket_do_not_disturb(
     mode switch (``night``), and whether each is on."""
     satellites = _satellites(hass)
     if satellites is None:
-        connection.send_error(msg["id"], "not_loaded", "Voice Labs is not set up")
+        connection.send_error(msg["id"], "not_loaded", "Voice Incubator is not set up")
         return
     connection.send_result(
         msg["id"],

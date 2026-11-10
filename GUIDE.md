@@ -1,11 +1,11 @@
-# Voice Labs guide
+# Voice Incubator guide
 
-Everything the Voice Labs app does, page by page. What it is and how to
+Everything the Voice Incubator app does, page by page. What it is and how to
 install it are in the [README](README.md).
 
-## The Voice Labs integration
+## The Voice Incubator integration
 
-The integration (this repository's `custom_components/voice_labs`) gives each
+The integration (this repository's `custom_components/voice_incubator`) gives each
 satellite:
 
 - a **device** of its own, with its own area, made when the satellite
@@ -33,6 +33,20 @@ It also runs the commands' **intents** for the app, as Assist does (see
 Without the integration the app still works, but satellites have no timers and
 their areas are kept by the app; intents still run, through Home Assistant's
 REST API, but can't tell an unavailable device apart.
+
+### From Voice Labs
+
+Voice Incubator was Voice Labs. Its integration is a new one
+(`voice_incubator`, in place of `voice_labs`): install it from this repository
+in HACS, restart Home Assistant, and the app sets it up the next time it
+connects. Then delete the **Voice Labs** integration (Settings > Devices &
+services) and its folder, `custom_components/voice_labs`. Until then the app
+keeps talking to the old one.
+
+In automations, the timer triggers are now `voice_incubator.timer_*`, and the
+event each command fires is `voice_incubator_command` -- the app fires
+`voice_labs_command` too, for now. Alarms and reminders stay on the
+**Voice Labs** calendar while there is no **Voice Incubator** one.
 
 ## The Home, by area
 
@@ -77,7 +91,7 @@ the stock Voice PE, a satellite's ring shows when it isn't connected: solid
 warm white while it starts up and joins Wi-Fi, a blue sparkle until the app
 connects to it, and a red sparkle whenever it has lost Wi-Fi or the app
 (after 10 minutes of starting up, too). A satellite answers one app at a
-time: to try one with another Voice Labs app, disable its Voice Labs device
+time: to try one with another Voice Incubator app, disable its Voice Incubator device
 in Home Assistant, and this app lets go of it until it's enabled again
 (there, or **Enable** on its page). Click a satellite's tile for its page:
 
@@ -112,7 +126,7 @@ words** page, which is also where each wake word is tuned.
 - **Custom wake words**: a microWakeWord model (`.tflite`) and its manifest
   (`.json`), as ESPHome and the Tater Wake Words catalog share them. Upload
   both together on the Wake words page, or copy them into `wake_words/` in
-  the app's configuration folder (`addon_configs/..._voice_labs` over Samba).
+  the app's configuration folder (`addon_configs/..._voice_incubator` over Samba).
   They run at the cutoff in their manifest -- the one they were trained for
   -- and are not checked a second time until you give them confusables. A
   model the satellite cannot run is refused when uploaded, and marked "can't
@@ -499,7 +513,7 @@ version for the satellite it's said to). A command has:
   the **Responses** panel in Settings says instead: the specific
   sentence unless you change it (Home Assistant's own says the brief one).
   The satellite's center button, pressed during a call, cancels it and what
-  it is saying (the firmware's `voice_labs.cancel`); so does **"stop"**, said
+  it is saying (the firmware's `voice_incubator.cancel`); so does **"stop"**, said
   alone while it says a reply. Pressed with nothing to stop or pause, the
   button starts a call: press to talk. Piper says a reply a
   sentence at a time, starting as soon as the first is ready, without the
@@ -628,8 +642,8 @@ The action, the script and the response template all see:
 | `target` | `entity_id` from the slots (a room said with a device only picks it out), else `area_id`/`floor_id`, else the satellite's area: `target: "{{ target }}"` |
 | `command` | `id`, `description`, `text` (what was heard) |
 | `place` | where it acted: `said` ("in the Kitchen", "upstairs"; empty when unknown; by the rooms' names in Names), `here` (only the satellite's area), `areas` (ids; a floor's every area) |
-| `names` | what each device is called when said: its name in Names, else Home Assistant's, by entity id -- every one named there, and the command's own: `{{ names[slots.entity[0]] }}`, or for another, `{{ names.get(e, state_attr(e, 'friendly_name')) }}` (not in the `voice_labs_command` event) |
-| `devices` | what is meant as part of an area: the devices added in Names and part of their area, each with its area there -- `devices.get(s.entity_id) in place.areas` (not in the `voice_labs_command` event) |
+| `names` | what each device is called when said: its name in Names, else Home Assistant's, by entity id -- every one named there, and the command's own: `{{ names[slots.entity[0]] }}`, or for another, `{{ names.get(e, state_attr(e, 'friendly_name')) }}` (not in the `voice_incubator_command` event) |
+| `devices` | what is meant as part of an area: the devices added in Names and part of their area, each with its area there -- `devices.get(s.entity_id) in place.areas` (not in the `voice_incubator_command` event) |
 | `result` | in the response only: what a script returned (`stop` with `response_variable`), plus `outcome`, `speech` (what would be said without your response) and, when it failed, `error` |
 
 A script is called with these as its data, so its fields see them. What it
@@ -646,7 +660,7 @@ sequence:
     response_variable: result
 ```
 
-Every command that runs also fires a `voice_labs_command` event with the same
+Every command that runs also fires a `voice_incubator_command` event with the same
 data plus `outcome` and `response` (what was said), failed ones included.
 
 ### Two commands at once
@@ -723,7 +737,7 @@ pass. Timers are held in memory by Home Assistant, so a restart loses them.
 ### Alarms and reminders
 
 In English, alarms and reminders with a time are events on a **Local
-Calendar** in Home Assistant named **Voice Labs**, which the app creates when
+Calendar** in Home Assistant named **Voice Incubator**, which the app creates when
 it connects (Home Assistant's Local Calendar integration, built in). They
 outlive restarts, can be for another day or repeat, and show -- and can be
 changed -- in Home Assistant's calendar. Add **Set an alarm**, **Cancel an
@@ -757,7 +771,7 @@ like a timer, until "stop" (said on one, it stops on all); a reminder sounds
 the alarm once and is said ("Reminder: call your mom."). A satellite in no
 area has its own. An event added in Home Assistant is a reminder said on
 every satellite. The description of each event the app adds marks it as an
-alarm or a reminder and names the area (`[voice_labs:alarm:<area>]`; one set
+alarm or a reminder and names the area (`[voice_incubator:alarm:<area>]`; one set
 before alarms were the area's names its satellite, and is that satellite's
 area's); keep that when editing one. One missed by
 up to five minutes (the app was down) still goes off. The calendar is
@@ -782,7 +796,7 @@ the button, or "Okay Nabu") on any one stops them all. A satellite in no area
 has a list of its own. Moving a satellite into an area loses the timers on
 its own list.
 
-Automations can follow timers with the `voice_labs.timer_created`,
+Automations can follow timers with the `voice_incubator.timer_created`,
 `timer_finished`, `timer_paused`, `timer_unpaused`, `timer_time_changed` and
 `timer_cancelled` triggers -- targeting an area's list, or the area -- and
 act on them with the `voice_timer_list.*` actions (`create_timer`,
@@ -791,8 +805,8 @@ act on them with the `voice_timer_list.*` actions (`create_timer`,
 ## Music
 
 Music plays on **Music Assistant**'s players. A satellite running a Sendspin
-client (the Voice Labs firmware does) shows up in Music Assistant by itself,
-and the Voice Labs integration finds that player from the satellite's MAC
+client (the Voice Incubator firmware does) shows up in Music Assistant by itself,
+and the Voice Incubator integration finds that player from the satellite's MAC
 address; the satellite's page shows it under **Music** and can pick another. Add the commands from the
 library's **Music** group:
 
@@ -1397,7 +1411,7 @@ Some things are different on a satellite that isn't the app's:
   area.
 - There's no night mode (it can't blink), and no call sounds.
 
-Its speech-to-text is never the app's own: one called Voice Labs would ask
+Its speech-to-text is never the app's own: one called Voice Incubator would ask
 itself, so Settings doesn't offer it, and one chosen before is passed over
 for the built-in model.
 
@@ -1469,7 +1483,7 @@ implied target may be any entity.
   puts that first, then its **steps** in order, each with its time since the
   session started and whether it succeeded: the wake word (with the
   probability the satellite's model came in with, against its cutoff; new
-  voice_labs firmware), its verification, the end of speech, the speaker,
+  voice_incubator firmware), its verification, the end of speech, the speaker,
   where the command starts, recognition, the action or answer, and what was
   said -- and how long it took: verification's decode, speaker
   identification, the acoustic model, recognition with the part TDT or the
@@ -1485,7 +1499,7 @@ implied target may be any entity.
   each one's probability against its cutoff, with a mark where a wake word
   was detected. The satellite streams only while you listen, its ring blinks
   red the whole time, and it doesn't answer a wake word meanwhile. It needs
-  the voice_labs firmware from this version.
+  the voice_incubator firmware from this version.
 - Tick **Keep every session** on the Sessions page to keep every session's audio,
   or debug one satellite (its page, under Test it). That keeps
   the satellite's audio and can be a **dry run**: nothing is executed, and

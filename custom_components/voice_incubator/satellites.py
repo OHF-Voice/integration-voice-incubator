@@ -1,4 +1,4 @@
-"""The satellites the voice_labs app serves, as Home Assistant devices.
+"""The satellites the voice_incubator app serves, as Home Assistant devices.
 
 The app registers each satellite it connects to. A satellite becomes a device
 of this integration, and uses its area's voice_timer_list for its timers --
@@ -30,7 +30,7 @@ if TYPE_CHECKING:
 
 _MAC = re.compile(r"^[0-9a-f]{12}$")
 
-type VoiceLabsConfigEntry = ConfigEntry[Satellites]
+type VoiceIncubatorConfigEntry = ConfigEntry[Satellites]
 
 
 @dataclass

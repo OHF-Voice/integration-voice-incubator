@@ -2,12 +2,12 @@
   "config": {
     "step": {
       "user": {
-        "title": "Voice Labs",
-        "description": "Adds the voice_labs app's satellites as devices, with their timers."
+        "title": "Voice Incubator",
+        "description": "Adds the voice_incubator app's satellites as devices, with their timers."
       }
     },
     "abort": {
-      "single_instance_allowed": "Voice Labs is already set up."
+      "single_instance_allowed": "Voice Incubator is already set up."
     }
   },
   "exceptions": {

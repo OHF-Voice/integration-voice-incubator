@@ -16,7 +16,7 @@ from pytest_homeassistant_custom_component.typing import WebSocketGenerator
 
 
 async def _setup(hass: HomeAssistant) -> None:
-    entry = MockConfigEntry(domain="voice_labs", title="Voice Labs")
+    entry = MockConfigEntry(domain="voice_incubator", title="Voice Incubator")
     entry.add_to_hass(hass)
     assert await hass.config_entries.async_setup(entry.entry_id)
     await hass.async_block_till_done()
@@ -73,7 +73,7 @@ def _agent(hass: HomeAssistant, agent: conversation.AbstractConversationAgent) -
 
 async def _ask(client, **message: Any) -> list[dict[str, Any]]:
     """The events of one question, through its result or error."""
-    await client.send_json_auto_id({"type": "voice_labs/conversation/stream", **message})
+    await client.send_json_auto_id({"type": "voice_incubator/conversation/stream", **message})
     msg = await client.receive_json()
     assert msg["success"], msg
     events = []
@@ -144,9 +144,9 @@ class FakeStream:
 async def _speak(hass: HomeAssistant, client, streaming_input: bool) -> tuple[FakeStream, list]:
     stream = FakeStream(streaming_input)
     played = async_mock_service(hass, "media_player", "play_media")
-    with patch("custom_components.voice_labs.streams.tts.async_create_stream", return_value=stream):
+    with patch("custom_components.voice_incubator.streams.tts.async_create_stream", return_value=stream):
         await client.send_json_auto_id({
-            "type": "voice_labs/tts/stream", "engine_id": "tts.cloud", "media_player": "media_player.vpe",
+            "type": "voice_incubator/tts/stream", "engine_id": "tts.cloud", "media_player": "media_player.vpe",
             "text": "First sentence. ", "language": "en-US",
         })
         msg = await client.receive_json()
@@ -156,7 +156,7 @@ async def _speak(hass: HomeAssistant, client, streaming_input: bool) -> tuple[Fa
 
 
 async def _add(client, **message: Any) -> dict:
-    await client.send_json_auto_id({"type": "voice_labs/tts/stream/add", "stream": "abc", **message})
+    await client.send_json_auto_id({"type": "voice_incubator/tts/stream/add", "stream": "abc", **message})
     return await client.receive_json()
 
 
@@ -204,7 +204,7 @@ async def test_unsubscribing_ends_the_turn(hass: HomeAssistant, hass_ws_client: 
 
     agent_id = _agent(hass, SlowAgent())
     client = await hass_ws_client(hass)
-    await client.send_json_auto_id({"type": "voice_labs/conversation/stream", "text": "tell me a long story", "agent_id": agent_id})
+    await client.send_json_auto_id({"type": "voice_incubator/conversation/stream", "text": "tell me a long story", "agent_id": agent_id})
     msg = await client.receive_json()
     assert msg["success"]
     await asyncio.wait_for(started.wait(), 5)

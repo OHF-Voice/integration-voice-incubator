@@ -24,7 +24,7 @@ from homeassistant.helpers.entity_platform import (
 )
 
 from .const import DOMAIN
-from .satellites import Satellite, Satellites, VoiceLabsConfigEntry
+from .satellites import Satellite, Satellites, VoiceIncubatorConfigEntry
 from .timer_list_const import DOMAIN as TIMER_LIST_DOMAIN
 from .timer_list_local import InMemoryTimerListEntity
 
@@ -35,7 +35,7 @@ def area_unique_id(area_id: str) -> str:
 
 async def async_setup_entry(
     hass: HomeAssistant,
-    entry: VoiceLabsConfigEntry,
+    entry: VoiceIncubatorConfigEntry,
     async_add_entities: AddConfigEntryEntitiesCallback,
 ) -> None:
     """A list for each satellite's area, and for each satellite in none:
