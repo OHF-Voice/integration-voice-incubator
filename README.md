@@ -16,11 +16,12 @@ speaks English.
 It comes in three parts:
 
 - the **Voice Incubator app** for Home Assistant, which listens, recognizes and
-  answers, in [OHF-Voice/voice-incubator](https://github.com/OHF-Voice/voice-incubator);
+  answers, in [OHF-Voice/app-voice-incubator](https://github.com/OHF-Voice/app-voice-incubator)
+  (its source: [OHF-Voice/voice-incubator](https://github.com/OHF-Voice/voice-incubator));
 - the **Voice Incubator integration**, here, which gives each satellite its device,
   its timers and Assist's intents;
-- the **firmware** for the Home Assistant Voice Preview Edition, built in
-  [OHF-Voice/voice-pe-alt-firmware](https://github.com/OHF-Voice/voice-pe-alt-firmware).
+- the **firmware** for the Home Assistant Voice Preview Edition, in
+  [OHF-Voice/firmware-voice-incubator](https://github.com/OHF-Voice/firmware-voice-incubator).
 
 ## Highlights
 
@@ -84,8 +85,8 @@ to flash -- or, through [Wyoming](#other-satellites-through-wyoming), any
 satellite Home Assistant has.
 
 1. **The app.**
-   [![Add the repository to your Home Assistant.](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2FOHF-Voice%2Fapps-experimental)
-   Add `https://github.com/OHF-Voice/apps-experimental` to Home Assistant's app
+   [![Add the repository to your Home Assistant.](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2FOHF-Voice%2Fapp-voice-incubator)
+   Add `https://github.com/OHF-Voice/app-voice-incubator` to Home Assistant's app
    repositories, then install **Voice Incubator** and start it. The first time it
    starts, it downloads its speech models -- about 530 MB: Parakeet (speech),
    EmbeddingGemma 2 (meaning), GLiNER (the command fallback) and Piper's
@@ -99,7 +100,7 @@ satellite Home Assistant has.
    It gives each satellite a device and its timers, and runs Assist's intents
    for the app.
 3. **The satellites.** Flash a Home Assistant Voice Preview Edition from its
-   [install page](https://ohf-voice.github.io/voice-pe-alt-firmware/voice-pe-voice-labs/)
+   [install page](https://ohf-voice.github.io/firmware-voice-incubator/voice-pe/)
    and give it your Wi-Fi. The app finds it on the network and connects to it.
 
 Then open **Voice Incubator** in Home Assistant's sidebar to make commands, name
@@ -166,4 +167,4 @@ Only with the Voice Incubator firmware:
   -- how it works, what was measured to get it there, and how to work on it
   -- and its [changelog](https://github.com/OHF-Voice/voice-incubator/blob/main/CHANGELOG.md).
 - [The firmware](https://github.com/OHF-Voice/firmware-voice-incubator), and its
-  [install page](https://ohf-voice.github.io/voice-pe-alt-firmware/voice-pe-voice-labs/).
+  [install page](https://ohf-voice.github.io/firmware-voice-incubator/voice-pe/).
