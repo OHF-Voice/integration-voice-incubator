@@ -924,6 +924,9 @@ target:
 - **Check off the to-do list** and **Take off the to-do list**: "check off
   call the plumber on the to-do list", "remove the dentist from the to do
   list".
+- **What's on the to-do list**, and **What's on my to-do list** (People:
+  the speaker's own, else the home's): what is still to do -- "what's on the
+  to-do list", "read me my to-do list" -- as the shopping list's says it.
 
 Checking off and removing take items that are on the list: what was heard
 is matched to them as spoken, so "test three" is the item "Test 3", "the
