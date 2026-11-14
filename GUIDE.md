@@ -146,10 +146,12 @@ others of the same phrase; without one, it is called by its phrase. The new word
 custom one, at a cutoff of 0.8 and not checked a second time. How well it
 does can't be told before it is tried: try it from where people stand, tune
 its cutoff, give it confusables, and train it again if it disappoints (two
-trainings of the same phrase can differ). Training needs the **training
-kit** -- the base model and the speech, music and noise it trains against,
-about 3 GB -- in `wake_training/` in the app's configuration folder; the page
-says when it is missing.
+trainings of the same phrase can differ). The first time, the page offers
+to **Install** what training needs: TensorFlow and the **training kit** (the
+speech, music and noise it trains against) -- about 1.2 GB to download on a
+PC and 900 MB on a Raspberry Pi, and about 4 GB in the app's data, left out
+of backups. **Remove** frees it again. A kit of your own in `wake_training/`
+in the app's configuration folder is used instead of the downloaded one.
 
 Open a wake word on the Wake words page to change:
 

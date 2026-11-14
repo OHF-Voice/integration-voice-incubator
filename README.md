@@ -113,8 +113,8 @@ everything it does, page by page.
 
 Without Home Assistant's app store, the app also runs as a container
 (`ghcr.io/ohf-voice/voice-incubator`, amd64 and aarch64), given Home Assistant's
-address and a long-lived access token (`HASS_URL`, `HASS_TOKEN`), with no
-wake word training and nothing guarding its web UI: see
+address and a long-lived access token (`HASS_URL`, `HASS_TOKEN`), with
+nothing guarding its web UI: see
 [Standalone](https://github.com/OHF-Voice/voice-incubator#standalone).
 
 ## Other satellites, through Wyoming
