@@ -223,7 +223,7 @@ that stays.
   For every satellite in Settings, or one satellite's own under
   Input; a session's Recognition step says which was sent.
 - **Language.** Each entity is asked in the language you pick from the ones it
-  supports, or automatically in its best match for English.
+  supports, or automatically in its best match for the app's language.
 - Without a speech-to-text entity, the app's own model (Parakeet) writes that
   text. It always hears AGC, so Runs and Audio show only once an entity is
   picked.
@@ -235,7 +235,8 @@ that stays.
   to say still plays its short sound on the satellite itself.
 - **Built-in voice.** Without a text-to-speech entity, replies -- and
   announcements -- are said by Piper, in the voice picked in Settings:
-  Kristin unless you pick another of Piper's US or British English voices
+  its language's own (Kristin in English) unless you pick another of Piper's
+  voices in the app's language (US or British English, in English)
   (**Sample** plays the voice's recording first). A voice is downloaded the
   first time it is used, 60 to 140 MB; until then the one before speaks. For
   a voice trained on several people, pick the **speaker**. Piper's own
@@ -343,8 +344,7 @@ The library's "my" commands act on the speaker's own with `mine`
 replaces its `slots.entity` (else the command's own, else the home's), their
 playlist its `slots.query`. Its response
 may say something of its own when nobody is known (`no_speaker`). The "my"
-commands are in the English library for now; **Remind me** is personal in
-every language.
+commands are in every language's library.
 
 **Voices**: on the People page, pick a name and a satellite and read the
 passage aloud in your normal voice, walking slowly around the room, for about
@@ -665,8 +665,8 @@ data plus `outcome` and `response` (what was said), failed ones included.
 
 ### Two commands at once
 
-In English, two commands may be said together, joined by "and", "then" or
-"and then":
+Two commands may be said together, joined by "and", "then" or "and then"
+(in English; each language by its own words):
 
 - two of them: "turn on the lights and turn off the TV", "lock the front
   door and then turn off the lights";
@@ -736,7 +736,7 @@ pass. Timers are held in memory by Home Assistant, so a restart loses them.
 
 ### Alarms and reminders
 
-In English, alarms and reminders with a time are events on a **Local
+Alarms and reminders with a time are events on a **Local
 Calendar** in Home Assistant named **Voice Incubator**, which the app creates when
 it connects (Home Assistant's Local Calendar integration, built in). They
 outlive restarts, can be for another day or repeat, and show -- and can be
@@ -897,7 +897,7 @@ in an area or floor named ("dim the lights upstairs"), or a light by name
   warm white"). They are the `color_temperatures` list, in kelvin (2700 to
   6500): change it in Names to name others.
 
-These are in the English library for now. Setting the brightness, the color
+Setting the brightness, the color
 or the color temperature acts only on lights that can ("Kitchen Ceiling
 can't change color."; see [What a device can do](#what-a-device-can-do)).
 

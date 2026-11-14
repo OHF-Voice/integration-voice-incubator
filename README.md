@@ -9,7 +9,8 @@
 Voice satellites with commands you make yourself, recognized on your own Home
 Assistant. A command says what to listen for, where, and what happens: speak a
 response, run a script, activate a scene, or run an action. It hears and
-speaks English.
+speaks one language, picked on the app's Configuration tab: English, German,
+Spanish, French, Italian, Dutch, Polish, Russian or Ukrainian.
 
 ![The Home page: the whole home's commands, grouped by what they're for](https://raw.githubusercontent.com/OHF-Voice/voice-incubator/main/images/home.png)
 
