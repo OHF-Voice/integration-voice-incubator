@@ -38,10 +38,10 @@ REST API, but can't tell an unavailable device apart.
 
 Voice Incubator was Voice Labs. Its integration is a new one
 (`voice_incubator`, in place of `voice_labs`): install it from this repository
-in HACS, restart Home Assistant, and the app sets it up the next time it
-connects. Then delete the **Voice Labs** integration (Settings > Devices &
-services) and its folder, `custom_components/voice_labs`. Until then the app
-keeps talking to the old one.
+in the Marketplace, and the app sets it up the next time it connects. Then
+delete the **Voice Labs** integration (Settings > Devices & services) and its
+folder, `custom_components/voice_labs`. Until then the app keeps talking to the
+old one.
 
 In automations, the timer triggers are now `voice_incubator.timer_*`, and the
 event each command fires is `voice_incubator_command` -- the app fires
