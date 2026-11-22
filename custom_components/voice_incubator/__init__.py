@@ -45,6 +45,7 @@ from homeassistant.helpers.typing import ConfigType
 
 from .const import DOMAIN
 from .satellites import Satellites, VoiceIncubatorConfigEntry
+from .requests import async_register as async_register_requests
 from .streams import async_register as async_register_streams
 from .switch import describe as describe_switches
 from .timer_list import async_setup_timer_lists
@@ -63,6 +64,7 @@ async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
     websocket_api.async_register_command(hass, websocket_exposed)
     websocket_api.async_register_command(hass, websocket_do_not_disturb)
     async_register_streams(hass)
+    async_register_requests(hass)
     return True
 
 
