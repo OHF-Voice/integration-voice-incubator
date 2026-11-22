@@ -1,4 +1,33 @@
-# The services this integration registers are voice_timer_list's -- the entity
-# platform it brings, which is not an integration of its own -- and
-# timer_list.py describes them in code (async_set_service_schema): voice_incubator
-# itself has none.
+# voice_timer_list's services are described in code (timer_list.py,
+# async_set_service_schema): it is an entity platform, not an integration
+# of its own.
+ask_question:
+  fields:
+    device_id:
+      required: true
+      selector:
+        device:
+          integration: voice_incubator
+    question:
+      example: "The garage door is still open. Should I close it?"
+      selector:
+        text:
+    answers:
+      example: |
+        - id: "yes"
+          sentences: ["yes", "sure", "close it"]
+        - id: "no"
+          sentences: ["no", "leave it"]
+      selector:
+        object:
+    preannounce:
+      default: true
+      selector:
+        boolean:
+    timeout:
+      default: 30
+      selector:
+        number:
+          min: 1
+          max: 300
+          unit_of_measurement: seconds

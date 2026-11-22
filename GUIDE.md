@@ -1097,6 +1097,39 @@ connect the intercom (`intercom: connect`, with an area to listen for). Both
 need the satellites' firmware to be recent: the intercom says so when it
 isn't. Announcements are said in each satellite's voice.
 
+### Asking a question from an automation
+
+The **`voice_incubator.ask_question`** action has a satellite chime, say a
+question and listen for the reply with no wake word, as after the
+conversation agent asks something back. What was said comes back as the
+action's response, matched against the answers you give as Home Assistant's
+own `assist_satellite.ask_question` matches them (each sentence is a
+template: `[optional]`, `(a|b)`, and `{name}` for any words, returned in
+`slots`):
+
+```yaml
+action: voice_incubator.ask_question
+data:
+  device_id: <the satellite's device>
+  question: "The garage door is still open. Should I close it?"
+  answers:
+    - id: "yes"
+      sentences: ["yes [please]", "sure", "close it"]
+    - id: "no"
+      sentences: ["no", "leave it"]
+response_variable: answer
+# answer: {"id": "yes", "sentence": "yes please", "slots": {}}
+```
+
+Nothing said, or nothing that matches, gives `id: null` (`sentence` is what
+was heard, or empty). It waits, as an announcement does, for a call, a
+ringing timer or the intercom there to end. `preannounce: false` skips the
+chime; `timeout` (30 seconds) is how long to wait for a reply. It fails when
+the app isn't connected, the satellite's area is on do not disturb, the
+satellite is busy for over a minute, or a wake word is said instead of an
+answer. The device may be the satellite's own or its ESPHome device. It
+needs the Voice Incubator firmware.
+
 ## Do not disturb
 
 Each area with a satellite has a **Do not disturb** switch: at the top of the

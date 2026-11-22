@@ -40,5 +40,33 @@
       "description": "Triggers when a timer is resumed on a timer list.",
       "name": "Timer resumed"
     }
+  },
+  "services": {
+    "ask_question": {
+      "name": "Ask question",
+      "description": "Has a Voice Incubator satellite ask a question and listen for the reply without a wake word. Returns the matched answer's id, what was heard, and any slots.",
+      "fields": {
+        "device_id": {
+          "name": "Satellite",
+          "description": "The Voice Incubator satellite to ask."
+        },
+        "question": {
+          "name": "Question",
+          "description": "What the satellite says before it listens."
+        },
+        "answers": {
+          "name": "Answers",
+          "description": "Possible answers: each an id and the sentences (hassil templates) that mean it."
+        },
+        "preannounce": {
+          "name": "Preannounce",
+          "description": "Play a chime before the question."
+        },
+        "timeout": {
+          "name": "Timeout",
+          "description": "How long to wait for a reply, in seconds."
+        }
+      }
+    }
   }
 }
